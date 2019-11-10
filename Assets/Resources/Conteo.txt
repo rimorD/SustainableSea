@@ -1,0 +1,16 @@
+Cos_Oricio;0.3
+Cos_Oricio_Percebe;0.2
+Cos_Oricio_Pulpo;0.1
+Cos_Percebe;0.3
+Cos_Percebe_Pulpo;0.1
+Med_Alga;0.5
+Med_Pulpo;0.4
+Med_Merluza;0.4
+Med_Alga_Merluza;0.3
+Med_Alga_Pulpo;0.2
+Med_Merluza_Pulpo;0.2
+Int_Alga;0.3
+Int_Bonito;0.2
+Int_Merluza;0.2
+Int_Alga_Merluza;0.2
+Int_Bonito_Merluza;0.1

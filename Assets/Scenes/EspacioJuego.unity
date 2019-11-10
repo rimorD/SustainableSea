@@ -337,5 +337,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc6e022f0034064f8eaa5a57e2e8cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardLength: 10
-  prefab: {fileID: 5261102716020898189, guid: d8c24e7cb13e7a440b716183fe7f0e15, type: 3}
+  boardLength: 40
+  tileCountFile: {fileID: 4900000, guid: e8af60e0f078de34f8a823ad3195d124, type: 3}
