@@ -1,0 +1,28 @@
+Cartas
+Criogénesis explosiva 10
+Pescadores furtivos 8
+Estudio genético 20
+Voluntariado ambiental 8
+Multa por pesca ilegal 16
+Fallo del motor 10
+
+Casillas 40
+Costa 10
+	Oricio 3
+	Oricio percebe 2
+	Oricio Pulpo 1
+	Percebe 3
+	Percebe pulpo 1
+Medio 20
+	Alga 5
+	Pulpo 4
+	Merluza 4
+	Alga merluza 3
+	Alga pulpo 2
+	Merluza pulpo 2
+Interior 10
+	Alga 3
+	Bonito 2
+	Merluza 2
+	Alga merluza 2
+	Bonito merluza 1
