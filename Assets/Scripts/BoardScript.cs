@@ -14,28 +14,28 @@ public class BoardScript : MonoBehaviour
         GameObject board = gameObject;
         lineLength = boardLength / 4;
 
-        this.InitializeTileStacks();
+        InitializeTileLists();
 
         for (int i = 0; i < lineLength; i++)
         {
             // Lateral izquierdo
             Vector3 position = new Vector3(0, 0, i+1);
-            GameObject tile = Instantiate(this.GetMediumTile(), position, Quaternion.AngleAxis(270, new Vector3(0, 1)));
+            GameObject tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(270, new Vector3(0, 1)));
             tile.transform.parent = board.transform;
 
             // Lateral derecho
             position = new Vector3(lineLength - 1, 0, i+1);
-            tile = Instantiate(this.GetMediumTile(), position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
+            tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
             tile.transform.parent = board.transform;
 
             // Parte inferior
             position = new Vector3(i, 0, 0);
-            tile = Instantiate(this.GetCoastTile(), position, Quaternion.AngleAxis(180, new Vector3(0,1)));
+            tile = Instantiate(GetCoastTile(), position, Quaternion.AngleAxis(180, new Vector3(0,1)));
             tile.transform.parent = board.transform;
 
             // Parte superior
             position = new Vector3(i, 0, lineLength + 1);
-            tile = Instantiate(this.GetInteriorTile(), position, Quaternion.identity);
+            tile = Instantiate(GetInteriorTile(), position, Quaternion.identity);
             tile.transform.parent = board.transform;
         }
     }
@@ -51,30 +51,36 @@ public class BoardScript : MonoBehaviour
 
     private GameObject GetCoastTile()
     {
-        return coast_tiles.Pop();
+        GameObject result = coast_tiles[0];
+        coast_tiles.RemoveAt(0);
+        return result;
     }
 
     //---------------------------------------------------------------------------------------------
 
     private GameObject GetInteriorTile()
     {
-        return interior_tiles.Pop();
+        GameObject result = interior_tiles[0];
+        interior_tiles.RemoveAt(0);
+        return result;
     }
 
     //---------------------------------------------------------------------------------------------
 
     private GameObject GetMediumTile()
     {
-        return medium_tiles.Pop();
+        GameObject result = medium_tiles[0];
+        medium_tiles.RemoveAt(0);
+        return result;
     }
 
     //---------------------------------------------------------------------------------------------
 
-    private void InitializeTileStacks()
+    private void InitializeTileLists()
     {
-        medium_tiles = new Stack<GameObject>(); 
-        interior_tiles = new Stack<GameObject>(); 
-        coast_tiles = new Stack<GameObject>();
+        medium_tiles = new List<GameObject>(); 
+        interior_tiles = new List<GameObject>(); 
+        coast_tiles = new List<GameObject>();
         GameObject[] tile_prefabs = Resources.LoadAll<GameObject>("Prefabs");
 
         string[] lines = System.Text.RegularExpressions.Regex.Split(tileCountFile.text.Trim(), "[\n|\r]+");
@@ -89,22 +95,54 @@ public class BoardScript : MonoBehaviour
                 switch (values[0].Substring(0, 3))
                 {
                     case "Cos":
-                        coast_tiles.Push(tile);
+                        coast_tiles.Add(tile);
                         break;
                     case "Int":
-                        interior_tiles.Push(tile);
+                        interior_tiles.Add(tile);
                         break;
                     case "Med":
-                        medium_tiles.Push(tile);
+                        medium_tiles.Add(tile);
                         break;
                 }
             }
         }
 
-        /*medium_tiles = medium_tiles.OrderBy(stack => UnityEngine.Random.value);
-        interior_tiles = interior_tiles.OrderBy(stack => UnityEngine.Random.value);
-        coast_tiles = coast_tiles.OrderBy(stack => UnityEngine.Random.value);*/
+        ShuffleTileLists();
 
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ShuffleTileLists()
+    {
+        System.Random rng = new System.Random();
+
+        // Hay el doble de casillas medio que costa/interior, por lo que está separado
+        int n = medium_tiles.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            GameObject value = medium_tiles[k];
+            medium_tiles[k] = medium_tiles[n];
+            medium_tiles[n] = value;
+        }
+
+        // Hay el mismo número de costa e interior, por lo que pueden ir juntos
+        n = coast_tiles.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            GameObject value = coast_tiles[k];
+            coast_tiles[k] = coast_tiles[n];
+            coast_tiles[n] = value;
+
+            k = rng.Next(n + 1);
+            value = interior_tiles[k];
+            interior_tiles[k] = interior_tiles[n];
+            interior_tiles[n] = value;
+        }
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
@@ -112,9 +150,9 @@ public class BoardScript : MonoBehaviour
     public int boardLength;
     private int lineLength;
 
-    private Stack<GameObject> medium_tiles;
-    private Stack<GameObject> interior_tiles;
-    private Stack<GameObject> coast_tiles;
+    protected List<GameObject> medium_tiles;
+    protected List<GameObject> interior_tiles;
+    protected List<GameObject> coast_tiles;
 
     public TextAsset tileCountFile;
 
