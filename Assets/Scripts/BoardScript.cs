@@ -11,33 +11,13 @@ public class BoardScript : MonoBehaviour
 
     void Start()
     {
-        GameObject board = gameObject;
-        lineLength = boardLength / 4;
+        this.lineLength = boardLength / 4;
 
         InitializeTileLists();
 
-        for (int i = 0; i < lineLength; i++)
-        {
-            // Lateral izquierdo
-            Vector3 position = new Vector3(0, 0, i+1);
-            GameObject tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(270, new Vector3(0, 1)));
-            tile.transform.parent = board.transform;
+        CreateTiles();
 
-            // Lateral derecho
-            position = new Vector3(lineLength - 1, 0, i+1);
-            tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
-            tile.transform.parent = board.transform;
-
-            // Parte inferior
-            position = new Vector3(i, 0, 0);
-            tile = Instantiate(GetCoastTile(), position, Quaternion.AngleAxis(180, new Vector3(0,1)));
-            tile.transform.parent = board.transform;
-
-            // Parte superior
-            position = new Vector3(i, 0, lineLength + 1);
-            tile = Instantiate(GetInteriorTile(), position, Quaternion.identity);
-            tile.transform.parent = board.transform;
-        }
+        CreateBoardBackground();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -81,7 +61,7 @@ public class BoardScript : MonoBehaviour
         medium_tiles = new List<GameObject>(); 
         interior_tiles = new List<GameObject>(); 
         coast_tiles = new List<GameObject>();
-        GameObject[] tile_prefabs = Resources.LoadAll<GameObject>("Prefabs");
+        GameObject[] tile_prefabs = Resources.LoadAll<GameObject>("Prefabs/Tiles");
 
         string[] lines = System.Text.RegularExpressions.Regex.Split(tileCountFile.text.Trim(), "[\n|\r]+");
         foreach(string line in lines)
@@ -113,7 +93,7 @@ public class BoardScript : MonoBehaviour
 
     //---------------------------------------------------------------------------------------------
 
-    public void ShuffleTileLists()
+    private void ShuffleTileLists()
     {
         System.Random rng = new System.Random();
 
@@ -143,6 +123,45 @@ public class BoardScript : MonoBehaviour
             interior_tiles[k] = interior_tiles[n];
             interior_tiles[n] = value;
         }
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    private void CreateTiles() 
+    {
+        for (int i = 0; i < lineLength; i++)
+        {
+            // Lateral izquierdo
+            Vector3 position = new Vector3(0, 0, i + 1);
+            GameObject tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(270, new Vector3(0, 1)));
+            tile.transform.parent = gameObject.transform;
+
+            // Lateral derecho
+            position = new Vector3(lineLength - 1, 0, i + 1);
+            tile = Instantiate(GetMediumTile(), position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
+            tile.transform.parent = gameObject.transform;
+
+            // Parte inferior
+            position = new Vector3(i, 0, 0);
+            tile = Instantiate(GetCoastTile(), position, Quaternion.AngleAxis(180, new Vector3(0, 1)));
+            tile.transform.parent = gameObject.transform;
+
+            // Parte superior
+            position = new Vector3(i, 0, lineLength + 1);
+            tile = Instantiate(GetInteriorTile(), position, Quaternion.identity);
+            tile.transform.parent = gameObject.transform;
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    private void CreateBoardBackground()
+    {
+        Vector3 position = new Vector3((lineLength / 2) - 0.5f, 0, (lineLength / 2) + 0.5f);
+        GameObject background = Resources.Load<GameObject>("Prefabs/Tablero");
+        GameObject boardBackground = Instantiate(background, position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
+        boardBackground.transform.parent = gameObject.transform;
+        boardBackground.transform.localScale = new Vector3(lineLength, boardBackground.transform.localScale.y, lineLength - 2);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
