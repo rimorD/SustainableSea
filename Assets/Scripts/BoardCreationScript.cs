@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class BoardScript : MonoBehaviour
+public class BoardCreationScript : MonoBehaviour
 {
     
     // Methods ////////////////////////////////////////////////////////////////////////////////////
@@ -18,6 +18,8 @@ public class BoardScript : MonoBehaviour
         CreateTiles();
 
         CreateBoardBackground();
+
+        CreateBoardLimitWalls();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -162,6 +164,33 @@ public class BoardScript : MonoBehaviour
         GameObject boardBackground = Instantiate(background, position, Quaternion.AngleAxis(90, new Vector3(0, 1)));
         boardBackground.transform.parent = gameObject.transform;
         boardBackground.transform.localScale = new Vector3(lineLength, boardBackground.transform.localScale.y, lineLength - 2);
+    }
+
+    // Create walls around the board so that our dice wont fall over.
+
+    private void CreateBoardLimitWalls()
+    {
+        GameObject wallTop = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallTop.transform.position = new Vector3(-0.5f, this.lineLength/2, this.lineLength/2 + 0.5f);
+        wallTop.transform.localScale = new Vector3(0, this.lineLength, this.lineLength + 2);
+        wallTop.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallRight = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallRight.transform.position = new Vector3(this.lineLength / 2 - 0.5f, this.lineLength / 2, this.lineLength + 1 + 0.5f);
+        wallRight.transform.localScale = new Vector3(0, this.lineLength, this.lineLength);
+        wallRight.transform.eulerAngles = new Vector3(0 , 90, 0);
+        wallRight.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallBottom = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallBottom.transform.position = new Vector3(this.lineLength - 0.5f, this.lineLength / 2, this.lineLength / 2 + 0.5f);
+        wallBottom.transform.localScale = new Vector3(0, this.lineLength, this.lineLength + 2);
+        wallBottom.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallLeft = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallLeft.transform.position = new Vector3(this.lineLength / 2 - 0.5f, this.lineLength / 2, -0.5f);
+        wallLeft.transform.localScale = new Vector3(0, this.lineLength, this.lineLength);
+        wallLeft.transform.eulerAngles = new Vector3(0, 90, 0);
+        wallLeft.GetComponent<Renderer>().enabled = false;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
