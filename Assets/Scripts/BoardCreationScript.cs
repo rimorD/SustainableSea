@@ -191,6 +191,28 @@ public class BoardCreationScript : MonoBehaviour
         wallLeft.transform.localScale = new Vector3(0, this.lineLength, this.lineLength);
         wallLeft.transform.eulerAngles = new Vector3(0, 90, 0);
         wallLeft.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallInnerTop = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallInnerTop.transform.position = new Vector3(0.5f, this.lineLength / 2, this.lineLength / 2 + 0.5f);
+        wallInnerTop.transform.localScale = new Vector3(0, this.lineLength, this.lineLength);
+        wallInnerTop.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallInnerRight = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallInnerRight.transform.position = new Vector3(this.lineLength / 2 - 0.5f, this.lineLength / 2, this.lineLength + 0.5f);
+        wallInnerRight.transform.localScale = new Vector3(0, this.lineLength, this.lineLength - 2);
+        wallInnerRight.transform.eulerAngles = new Vector3(0, 90, 0);
+        wallInnerRight.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallInnerBottom = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallInnerBottom.transform.position = new Vector3(this.lineLength - 1.5f, this.lineLength / 2, this.lineLength / 2 + 0.5f);
+        wallInnerBottom.transform.localScale = new Vector3(0, this.lineLength, this.lineLength);
+        wallInnerBottom.GetComponent<Renderer>().enabled = false;
+
+        GameObject wallInnerLeft = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wallInnerLeft.transform.position = new Vector3(this.lineLength / 2 - 0.5f, this.lineLength / 2, 0.5f);
+        wallInnerLeft.transform.localScale = new Vector3(0, this.lineLength, this.lineLength - 2);
+        wallInnerLeft.transform.eulerAngles = new Vector3(0, 90, 0);
+        wallInnerLeft.GetComponent<Renderer>().enabled = false;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
