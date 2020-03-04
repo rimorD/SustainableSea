@@ -81,6 +81,7 @@ public class Board : MonoBehaviour
             {
                 // Generate tiles
                 GameObject tile = Instantiate(tilePrefab);
+                tile.GetComponent<Tile>().SetResources(Int32.Parse(values[2]));
                 tile.GetComponentInChildren<MeshRenderer>().material = tileMaterials.First(material => material.name.Equals(values[0]));
 
                 switch (values[0].Substring(0, 3))
@@ -226,8 +227,26 @@ public class Board : MonoBehaviour
         // ***********************************************************
         // TEMPORAL, CUANDO SE CREEN LOS BARCOS DINAMICAMENTE CAMBIARÁ
 
-        Boat barco = GameObject.FindObjectOfType<Boat>();
-        barco.SetCurrentTile(initialTile.GetComponent<Tile>());
+        List<Boat> barcos = GameObject.FindObjectsOfType<Boat>().ToList();
+        Player[] jugadores = GameObject.FindObjectsOfType<Player>();
+        int playerId = 0;
+        foreach(Player jugador in jugadores)
+        {
+            jugador.PlayerId = playerId;
+            jugador.PlayerColor = (playerId == 0) ? Color.red : Color.blue;
+            playerId++;
+        }
+
+        playerId = 0;
+        foreach(Boat barco in barcos)
+        {
+            Player jugador = jugadores.First<Player>((player) => player.PlayerId == playerId);
+            jugador.AddBoat(barco);
+
+            playerId = playerId == 0 ? 1 : 0;
+
+            barco.SetCurrentTile(initialTile.GetComponent<Tile>());
+        }
 
     }
 

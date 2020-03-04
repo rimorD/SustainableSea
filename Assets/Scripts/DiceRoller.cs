@@ -13,6 +13,7 @@ public class DiceRoller : MonoBehaviour
         dieRigidBody = gameObject.GetComponentInChildren<Rigidbody>();
 
         board = FindObjectOfType<Board>();
+        stateManager = GameObject.FindObjectOfType<StateManager>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -26,6 +27,8 @@ public class DiceRoller : MonoBehaviour
 
     public void Roll()
     {
+        if (stateManager.CurrentPhase != StateManager.TurnPhase.WAITING_FOR_ROLL)
+            return;
         StartCoroutine(DiceCoroutine());
     }
 
@@ -85,6 +88,7 @@ public class DiceRoller : MonoBehaviour
     void GetDieValue()
     {
         double dotProduct;
+        int lastRollResult;
         if ((dotProduct = Vector3.Dot(transform.forward, Vector3.up)) > 0.6f)
         {
             lastRollResult = 1;
@@ -113,36 +117,15 @@ public class DiceRoller : MonoBehaviour
         Debug.Log(dotProduct);
         Debug.Log(lastRollResult);
 
-        SetDoneRolling(true);
-    }
-
-    // Attributes /////////////////////////////////////////////////////////////////////////////////
-
-    public int LastRollResult()
-    {
-        return lastRollResult;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public bool IsDoneRolling()
-    {
-        return isDoneRolling;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetDoneRolling(bool value)
-    {
-        isDoneRolling = value;
+        stateManager.LastRollResult = lastRollResult;
+        stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_CLICK;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
 
     Renderer dieRenderer;
     Rigidbody dieRigidBody;
-    int lastRollResult = 0;
-    bool isDoneRolling = false;
 
     Board board;
+    StateManager stateManager;
 }

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Boat : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Methods ////////////////////////////////////////////////////////////////////////////////////
+
     void Start()
     {
-        diceRoller = GameObject.FindObjectOfType<DiceRoller>();
+        stateManager = GameObject.FindObjectOfType<StateManager>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -22,16 +23,17 @@ public class Boat : MonoBehaviour
     void OnMouseUp()
     {
         // TODO: Check if UI element is in the way
-        Debug.Log("Click");
 
         // TODO: Check if is our turn
+        if (stateManager.CurrentPlayerId != this.Owner.PlayerId)
+            return;
 
         // Check if weve rolled the dice
-        if (!diceRoller.IsDoneRolling())
+        if (stateManager.CurrentPhase != StateManager.TurnPhase.WAITING_FOR_CLICK)
             return;
         
         // Move
-        int tilesToMove = diceRoller.LastRollResult();
+        int tilesToMove = stateManager.LastRollResult;
         for(int i = 0; i < tilesToMove; i++)
         {
             currentTile = currentTile.GetNextTile();
@@ -49,10 +51,12 @@ public class Boat : MonoBehaviour
 
         // Teleport to final position
         this.transform.position = currentTile.transform.position;
+        this.Owner.Money += currentTile.GetResources();
 
         // End turn
         //The die is ready to roll again
-        diceRoller.SetDoneRolling(false);
+        // TODO: Animate the boat, and wait for the animation to end
+        stateManager.NewTurn();
     }
 
     // Attributes /////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +68,7 @@ public class Boat : MonoBehaviour
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
 
-    DiceRoller diceRoller;
+    StateManager stateManager;
     Tile currentTile;
+    public Player Owner;
 }

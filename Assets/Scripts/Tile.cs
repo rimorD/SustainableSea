@@ -36,6 +36,8 @@ public class Tile : MonoBehaviour
 
     public int GetResources()
     {
+        if (AreThereFurtives())
+            return 0;
         return resources;
     }
 
