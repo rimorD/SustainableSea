@@ -81,7 +81,7 @@ public class Board : MonoBehaviour
             {
                 // Generate tiles
                 GameObject tile = Instantiate(tilePrefab);
-                tile.GetComponent<Tile>().SetResources(Int32.Parse(values[2]));
+                tile.GetComponent<Tile>().resources = Int32.Parse(values[2]);
                 tile.GetComponentInChildren<MeshRenderer>().material = tileMaterials.First(material => material.name.Equals(values[0]));
 
                 switch (values[0].Substring(0, 3))
@@ -154,7 +154,7 @@ public class Board : MonoBehaviour
             // Si es la primera o la última, es una esquina
             if (i == 0 || i == lineLength - 1)
             {
-                coastTile.GetComponent<Tile>().SetAsCorner();
+                coastTile.GetComponent<Tile>().isCorner = true;
             }
 
             // Si es la primera casilla, guardarla para asignarla como siguiente a la última 
@@ -162,13 +162,14 @@ public class Board : MonoBehaviour
             if (i == lineLength - 1)
             {
                 initialTile = coastTile;
-                coastTile.GetComponent<Tile>().SetAsInitialTile();
+                coastTile.GetComponent<Tile>().isInitialTile = true;
             }
 
-            // Si no, asignar la casilla como siguiente de la anterior
+            // Si no, enlazar las casillas
             else
             {
-                lastTile.GetComponent<Tile>().SetNextTile(coastTile.GetComponent<Tile>());
+                lastTile.GetComponent<Tile>().nextTile = coastTile.GetComponent<Tile>();
+                coastTile.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             }
             lastTile = coastTile;
         }
@@ -181,8 +182,9 @@ public class Board : MonoBehaviour
             mediumTileLeft.transform.rotation = Quaternion.AngleAxis(270, new Vector3(0, 1));
             mediumTileLeft.transform.parent = gameObject.transform;
 
-            // Asignar la casilla como siguiente de la anterior
-            lastTile.GetComponent<Tile>().SetNextTile(mediumTileLeft.GetComponent<Tile>());
+            // Enlazar las casillas
+            lastTile.GetComponent<Tile>().nextTile = mediumTileLeft.GetComponent<Tile>();
+            mediumTileLeft.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             lastTile = mediumTileLeft;
         }
 
@@ -194,14 +196,15 @@ public class Board : MonoBehaviour
             deepTile.transform.rotation = Quaternion.identity;
             deepTile.transform.parent = gameObject.transform;
 
-            // Asignar la casilla como siguiente de la anterior
-            lastTile.GetComponent<Tile>().SetNextTile(deepTile.GetComponent<Tile>());
+            // Enlazar las casillas
+            lastTile.GetComponent<Tile>().nextTile = deepTile.GetComponent<Tile>();
+            deepTile.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             lastTile = deepTile;
 
             // Si es la primera o la última, es una esquina
             if (i == 0 || i == lineLength - 1)
             {
-                deepTile.GetComponent<Tile>().SetAsCorner();
+                deepTile.GetComponent<Tile>().isCorner = true;
             }
         }
 
@@ -216,11 +219,13 @@ public class Board : MonoBehaviour
             // Si es la última, asignarle la casilla inicial como siguiente
             if(i == 0)
             {
-                mediumTileRight.GetComponent<Tile>().SetNextTile(initialTile.GetComponent<Tile>());
+                mediumTileRight.GetComponent<Tile>().nextTile = initialTile.GetComponent<Tile>();
+                initialTile.GetComponent<Tile>().previousTile = mediumTileRight.GetComponent<Tile>();
             }
 
-            // Asignarla como siguiente de la anterior
-            lastTile.GetComponent<Tile>().SetNextTile(mediumTileRight.GetComponent<Tile>());
+            // Enlazar las casillas
+            lastTile.GetComponent<Tile>().nextTile = mediumTileRight.GetComponent<Tile>();
+            mediumTileRight.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             lastTile = mediumTileRight;
         }
 

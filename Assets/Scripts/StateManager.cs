@@ -8,7 +8,7 @@ public class StateManager : MonoBehaviour
 
     void Start()
     {
-
+        cardManager = GameObject.FindObjectOfType<CardManager>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -33,4 +33,5 @@ public class StateManager : MonoBehaviour
     public int LastRollResult;
     public int CurrentPlayerId = 0;
     public int NumberOfPlayers = 2;
+    private CardManager cardManager;
 }

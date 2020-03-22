@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         boats = new List<Boat>();
+        cards = new List<ICard>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -36,5 +37,5 @@ public class Player : MonoBehaviour
     public int PlayerId;
     public int Money;
     private List<Boat> boats;
-    //private Card[] cards;
+    public List<ICard> cards;
 }

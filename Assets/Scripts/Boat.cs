@@ -9,6 +9,7 @@ public class Boat : MonoBehaviour
     void Start()
     {
         stateManager = GameObject.FindObjectOfType<StateManager>();
+        cardManager = GameObject.FindObjectOfType<CardManager>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -36,14 +37,14 @@ public class Boat : MonoBehaviour
         int tilesToMove = stateManager.LastRollResult;
         for(int i = 0; i < tilesToMove; i++)
         {
-            currentTile = currentTile.GetNextTile();
-            if (currentTile.IsCorner())
+            currentTile = currentTile.nextTile;
+            if (currentTile.isCorner)
             {
                 // Rotate
                 this.transform.Rotate(0, 90, 0);
             }
 
-            if (currentTile.IsInitialTile())
+            if (currentTile.isInitialTile)
             {
                 // Do whatever, get money, etc...
             }
@@ -51,6 +52,24 @@ public class Boat : MonoBehaviour
 
         // Teleport to final position
         this.transform.position = currentTile.transform.position;
+
+        // Get a card if we rolled 6
+        if (stateManager.LastRollResult == 6)
+        {
+            // Get a card
+            ICard drawnCard = cardManager.DrawCardFromDeck();
+            if(drawnCard is PassiveCard)
+            {
+                drawnCard.PlayCard(Owner, currentTile);
+            }
+            else
+            {
+                Owner.cards.Add(drawnCard);
+            }
+        }
+        // Move furtives if we rolled 1
+
+        // Resolve resources in our destination
         this.Owner.Money += currentTile.GetResources();
 
         // End turn
@@ -71,4 +90,5 @@ public class Boat : MonoBehaviour
     StateManager stateManager;
     Tile currentTile;
     public Player Owner;
+    CardManager cardManager;
 }

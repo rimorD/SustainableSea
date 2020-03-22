@@ -18,83 +18,37 @@ public class Tile : MonoBehaviour
         
     }
 
-    // Setters and getters ////////////////////////////////////////////////////////////////////////
-    
-    public Tile GetNextTile()
-    {
-        return nextTile;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetNextTile(Tile next)
-    {
-        nextTile = next;
-    }
-
     //---------------------------------------------------------------------------------------------
 
     public int GetResources()
     {
-        if (AreThereFurtives())
-            return 0;
-        return resources;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetResources(int rec)
-    {
-        resources = rec;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public bool AreThereFurtives()
-    {
-        return furtives;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetFurtives(bool furt)
-    {
-        furtives = furt;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public bool IsInitialTile()
-    {
-        return isInitialTile;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetAsInitialTile()
-    {
-        isInitialTile = true;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public bool IsCorner()
-    {
-        return isCorner;
-    }
-
-    //---------------------------------------------------------------------------------------------
-
-    public void SetAsCorner()
-    {
-        isCorner = true;
+        int multiplier = 1;
+        if (passiveCard != null)
+        {
+            multiplier *= passiveCard.resourceMultiplier;
+        }
+        if (nextTile.passiveCard != null && nextTile.passiveCard.affectsAdyacent)
+        {
+            multiplier *= nextTile.passiveCard.adyacentMultiplier;
+        }
+        if (previousTile.passiveCard != null && previousTile.passiveCard.affectsAdyacent)
+        {
+            multiplier *= previousTile.passiveCard.adyacentMultiplier;
+        }
+        if (furtives)
+        {
+            multiplier = 0;
+        }
+        return resources * multiplier;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
-    Tile nextTile;
-    int resources;
-    bool furtives = false;
-    bool isInitialTile = false;
-    bool isCorner = false;
+    public Tile nextTile;
+    public Tile previousTile;
+    public int resources;
+    public bool furtives = false;
+    public bool isInitialTile = false;
+    public bool isCorner = false;
+    public PassiveCard passiveCard;
 
 }
