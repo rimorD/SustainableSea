@@ -151,12 +151,6 @@ public class Board : MonoBehaviour
             coastTile.transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1));
             coastTile.transform.parent = gameObject.transform;
 
-            // Si es la primera o la última, es una esquina
-            if (i == 0 || i == lineLength - 1)
-            {
-                coastTile.GetComponent<Tile>().isCorner = true;
-            }
-
             // Si es la primera casilla, guardarla para asignarla como siguiente a la última 
             // y marcarla como casilla de salida
             if (i == lineLength - 1)
@@ -171,6 +165,17 @@ public class Board : MonoBehaviour
                 lastTile.GetComponent<Tile>().nextTile = coastTile.GetComponent<Tile>();
                 coastTile.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             }
+
+            // Si es la primera o la última, es una esquina
+            if (i == 0 || i == lineLength - 1)
+            {
+                coastTile.GetComponent<Tile>().isCorner = true;
+                if (i == 0)
+                {
+                    coastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
+                }
+            }
+
             lastTile = coastTile;
         }
 
@@ -199,13 +204,15 @@ public class Board : MonoBehaviour
             // Enlazar las casillas
             lastTile.GetComponent<Tile>().nextTile = deepTile.GetComponent<Tile>();
             deepTile.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
-            lastTile = deepTile;
 
             // Si es la primera o la última, es una esquina
             if (i == 0 || i == lineLength - 1)
             {
                 deepTile.GetComponent<Tile>().isCorner = true;
+                deepTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
             }
+
+            lastTile = deepTile;
         }
 
         for (int i = lineLength - 1; i >= 0; i--)
@@ -216,17 +223,18 @@ public class Board : MonoBehaviour
             mediumTileRight.transform.rotation = Quaternion.AngleAxis(90, new Vector3(0, 1));
             mediumTileRight.transform.parent = gameObject.transform;
 
-            // Si es la última, asignarle la casilla inicial como siguiente
-            if(i == 0)
-            {
-                mediumTileRight.GetComponent<Tile>().nextTile = initialTile.GetComponent<Tile>();
-                initialTile.GetComponent<Tile>().previousTile = mediumTileRight.GetComponent<Tile>();
-            }
-
             // Enlazar las casillas
             lastTile.GetComponent<Tile>().nextTile = mediumTileRight.GetComponent<Tile>();
             mediumTileRight.GetComponent<Tile>().previousTile = lastTile.GetComponent<Tile>();
             lastTile = mediumTileRight;
+
+            // Si es la última, asignarle la casilla inicial como siguiente
+            if (i == 0)
+            {
+                mediumTileRight.GetComponent<Tile>().nextTile = initialTile.GetComponent<Tile>();
+                initialTile.GetComponent<Tile>().previousTile = mediumTileRight.GetComponent<Tile>();
+                initialTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
+            }
         }
 
         // ***********************************************************

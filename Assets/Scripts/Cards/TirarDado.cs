@@ -7,7 +7,7 @@ public class TirarDado : BaseCard, ICard
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     public override void PlayCard(Player player, Tile tile)
     {
-
+        base.PlayCard(player, tile);
     }
 
     //---------------------------------------------------------------------------------------------

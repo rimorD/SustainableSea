@@ -8,6 +8,13 @@ public class PassiveCard : BaseCard, ICard
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     public override void PlayCard(Player player, Tile tile)
     {
+        base.PlayCard(player, tile);
+
+        if(tile.passiveCard != null)
+        {
+            GameObject.Destroy(tile.passiveCard.prefabInstance);
+        }
+
         tile.passiveCard = this;
         tileAttachedTo = tile;
         DrawCard();
@@ -20,7 +27,7 @@ public class PassiveCard : BaseCard, ICard
         // Load specific card prefab
         GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/" + cardName);
         // Draw it in the tile placeholder
-        GameObject.Instantiate(cardPrefab, tileAttachedTo.transform.Find("CardPlaceholder").transform.position, tileAttachedTo.transform.rotation);
+        prefabInstance = GameObject.Instantiate(cardPrefab, tileAttachedTo.transform.Find("CardPlaceholder").transform.position, tileAttachedTo.transform.rotation, tileAttachedTo.transform.parent);
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
@@ -49,4 +56,5 @@ public class PassiveCard : BaseCard, ICard
     public bool affectsAdyacent;
     public int adyacentMultiplier;
     Tile tileAttachedTo;
+    GameObject prefabInstance;
 }

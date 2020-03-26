@@ -7,14 +7,14 @@ public class EliminarVertido : BaseCard, ICard
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     public override void PlayCard(Player player, Tile tile)
     {
-
+        base.PlayCard(player, tile);
     }
 
     //---------------------------------------------------------------------------------------------
 
     public override void DrawCard()
     {
-
+        
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

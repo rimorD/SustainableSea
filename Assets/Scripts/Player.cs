@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     public string PlayerAvatar;
     public int PlayerId;
     public int Money;
+    public int PGS;
     private List<Boat> boats;
     public List<ICard> cards;
 }

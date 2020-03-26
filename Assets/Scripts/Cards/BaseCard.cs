@@ -12,7 +12,10 @@ public abstract class BaseCard : ICard
         PGS = pgs;
     }
 
-    public abstract void PlayCard(Player player, Tile tile);
+    public virtual void PlayCard(Player player, Tile tile) 
+    {
+        player.PGS += this.PGS;
+    }
     public abstract void DrawCard();
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

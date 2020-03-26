@@ -7,7 +7,7 @@ public class PerderDinero : BaseCard, ICard
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     public override void PlayCard(Player player, Tile tile)
     {
-
+        base.PlayCard(player, tile);
     }
 
     //---------------------------------------------------------------------------------------------
