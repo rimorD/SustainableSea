@@ -117,7 +117,7 @@ public class DiceRoller : MonoBehaviour
         Debug.Log(dotProduct);
         Debug.Log(lastRollResult);
 
-        stateManager.LastRollResult = lastRollResult;
+        stateManager.LastRollResult = 13;// lastRollResult;
         stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_CLICK;
     }
 

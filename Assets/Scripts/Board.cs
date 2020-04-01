@@ -170,10 +170,6 @@ public class Board : MonoBehaviour
             if (i == 0 || i == lineLength - 1)
             {
                 coastTile.GetComponent<Tile>().isCorner = true;
-                if (i == 0)
-                {
-                    coastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
-                }
             }
 
             lastTile = coastTile;
@@ -209,7 +205,6 @@ public class Board : MonoBehaviour
             if (i == 0 || i == lineLength - 1)
             {
                 deepTile.GetComponent<Tile>().isCorner = true;
-                deepTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
             }
 
             lastTile = deepTile;
@@ -233,7 +228,6 @@ public class Board : MonoBehaviour
             {
                 mediumTileRight.GetComponent<Tile>().nextTile = initialTile.GetComponent<Tile>();
                 initialTile.GetComponent<Tile>().previousTile = mediumTileRight.GetComponent<Tile>();
-                initialTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position = lastTile.GetComponent<Tile>().transform.Find("BoatPlaceholder").transform.position;
             }
         }
 

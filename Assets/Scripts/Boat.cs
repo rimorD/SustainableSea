@@ -16,20 +16,28 @@ public class Boat : MonoBehaviour
 
     void Update()
     {
-        /*if (stateManager.CurrentPhase == StateManager.TurnPhase.WAITING_FOR_ANIMATION)
+        if (isAnimating)
         {
-            if (transform.position != targetPosition)
+            if (currentMovement != null && Vector3.Distance(transform.position, currentMovement.finalPosition) > SMOOTH_DISTANCE)
             {
-                this.transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SMOOTH_TIME);
+                this.transform.position = Vector3.SmoothDamp(transform.position, currentMovement.finalPosition, ref velocity, SMOOTH_TIME);
+            }
+            else if(currentMovement != null && currentMovement.hasFinalRotation && Quaternion.Angle(transform.rotation, currentMovement.finalRotation) > MAX_DEGREES_DELTA)
+            {
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, currentMovement.finalRotation, MAX_DEGREES_DELTA);
             }
             else
             {
-                if (pendingTargetPositions.Count > 0)
-                    targetPosition = pendingTargetPositions.Dequeue();
+                if (pendingMovements.Count > 0)
+                    currentMovement = pendingMovements.Dequeue();
                 else
+                {
+                    currentMovement = null;
+                    isAnimating = false;
                     stateManager.NewTurn();
+                }
             }
-        }*/
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -47,9 +55,20 @@ public class Boat : MonoBehaviour
             return;
 
         // Initialize movement queue
-        pendingTargetPositions = new Queue<Vector3>();
+        pendingMovements = new Queue<Movement>();
         // Move out of the tile
-        pendingTargetPositions.Enqueue(currentTile.transform.Find("BoatPlaceholder").position);
+        pendingMovements.Enqueue
+        (
+            new Movement
+            (
+                new Vector3
+                (
+                    currentTile.transform.position.x, 
+                    currentTile.transform.position.y + SMOOTH_HEIGHT, 
+                    currentTile.transform.position.z
+                )
+            )
+        );
 
         // Move
         int tilesToMove = stateManager.LastRollResult;
@@ -58,10 +77,15 @@ public class Boat : MonoBehaviour
             currentTile = currentTile.nextTile;
             if (currentTile.isCorner)
             {
-                // Rotate
-                this.transform.Rotate(0, 90, 0);
                 // Move to corner
-                pendingTargetPositions.Enqueue(currentTile.transform.Find("BoatPlaceholder").position);
+                pendingMovements.Enqueue
+                (
+                    new Movement
+                    (
+                        new Vector3(currentTile.transform.position.x, currentTile.transform.position.y + SMOOTH_HEIGHT, currentTile.transform.position.z),
+                        Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z)
+                    )
+                );
             }
 
             if (currentTile.isInitialTile)
@@ -71,12 +95,24 @@ public class Boat : MonoBehaviour
         }
 
         // Final destination
-        pendingTargetPositions.Enqueue(currentTile.transform.Find("BoatPlaceholder").position);
-        // Move into the tile
-        pendingTargetPositions.Enqueue(currentTile.transform.position);
-        transform.position = currentTile.transform.position;
+        pendingMovements.Enqueue
+        (
+            new Movement
+            (
+                new Vector3
+                (
+                    currentTile.transform.position.x, 
+                    currentTile.transform.position.y + SMOOTH_HEIGHT, 
+                    currentTile.transform.position.z
+                )
+            )
+        );
 
+
+        // Move into the tile
+        pendingMovements.Enqueue(new Movement(currentTile.transform.position));
         stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_ANIMATION;
+        isAnimating = true;
 
         // Get a card if we rolled 6
         if (stateManager.LastRollResult == 6)
@@ -96,7 +132,6 @@ public class Boat : MonoBehaviour
 
         // Resolve resources in our destination
         this.Owner.Money += currentTile.GetResources();
-        stateManager.NewTurn();
     }
 
     // Attributes /////////////////////////////////////////////////////////////////////////////////
@@ -113,10 +148,16 @@ public class Boat : MonoBehaviour
     public Player Owner;
     CardManager cardManager;
 
+    public enum BoatType { ARTISANAL, TRAIL }
+    public BoatType boatType = BoatType.ARTISANAL;
+
     // Animation stuff
-    Vector3 targetPosition;
-    Quaternion targetRotation;
-    Queue<Vector3> pendingTargetPositions = new Queue<Vector3>();
+    Movement currentMovement;
+    bool isAnimating = false;
+    Queue<Movement> pendingMovements = new Queue<Movement>();
     Vector3 velocity;
     const float SMOOTH_TIME = 0.25f;
+    const float SMOOTH_DISTANCE = 0.01f;
+    const float SMOOTH_HEIGHT = 0.5f;
+    const float MAX_DEGREES_DELTA = 2.5f;
 }
