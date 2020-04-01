@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        boats = new List<Boat>();
         cards = new List<ICard>();
     }
 
@@ -23,6 +22,9 @@ public class Player : MonoBehaviour
 
     public void AddBoat(Boat boat)
     {
+        if(this.boats == null)
+            boats = new List<Boat>();
+
         this.boats.Add(boat);
         boat.Owner = this;
 

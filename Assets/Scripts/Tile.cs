@@ -27,14 +27,6 @@ public class Tile : MonoBehaviour
         {
             multiplier *= passiveCard.resourceMultiplier;
         }
-        if (nextTile.passiveCard != null && nextTile.passiveCard.affectsAdyacent)
-        {
-            multiplier *= nextTile.passiveCard.adyacentMultiplier;
-        }
-        if (previousTile.passiveCard != null && previousTile.passiveCard.affectsAdyacent)
-        {
-            multiplier *= previousTile.passiveCard.adyacentMultiplier;
-        }
         if (furtives)
         {
             multiplier = 0;

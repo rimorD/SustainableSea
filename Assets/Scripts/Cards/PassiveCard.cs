@@ -18,6 +18,13 @@ public class PassiveCard : BaseCard, ICard
         tile.passiveCard = this;
         tileAttachedTo = tile;
         DrawCard();
+
+        if (this.affectsAdyacent)
+        {
+            PassiveCard adyacentCard = new PassiveCard(0, adyacentMultiplier, cardName);
+            adyacentCard.PlayCard(player, tile.nextTile);
+            adyacentCard.PlayCard(player, tile.previousTile);
+        }
     }
 
     //---------------------------------------------------------------------------------------------

@@ -240,7 +240,7 @@ public class Board : MonoBehaviour
         // ***********************************************************
         // TEMPORAL, CUANDO SE CREEN LOS BARCOS DINAMICAMENTE CAMBIARÁ
 
-        List<Boat> barcos = GameObject.FindObjectsOfType<Boat>().ToList();
+        Boat[] barcos = GameObject.FindObjectsOfType<Boat>();
         Player[] jugadores = GameObject.FindObjectsOfType<Player>();
         int playerId = 0;
         foreach(Player jugador in jugadores)

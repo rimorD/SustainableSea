@@ -32,6 +32,6 @@ public class StateManager : MonoBehaviour
     public TurnPhase CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
     public int LastRollResult;
     public int CurrentPlayerId = 0;
-    public int NumberOfPlayers = 2;
+    public static int NumberOfPlayers = 2;
     private CardManager cardManager;
 }

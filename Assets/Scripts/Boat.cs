@@ -16,7 +16,7 @@ public class Boat : MonoBehaviour
 
     void Update()
     {
-        if (stateManager.CurrentPhase == StateManager.TurnPhase.WAITING_FOR_ANIMATION)
+        /*if (stateManager.CurrentPhase == StateManager.TurnPhase.WAITING_FOR_ANIMATION)
         {
             if (transform.position != targetPosition)
             {
@@ -29,7 +29,7 @@ public class Boat : MonoBehaviour
                 else
                     stateManager.NewTurn();
             }
-        }
+        }*/
     }
 
     //---------------------------------------------------------------------------------------------
@@ -74,6 +74,7 @@ public class Boat : MonoBehaviour
         pendingTargetPositions.Enqueue(currentTile.transform.Find("BoatPlaceholder").position);
         // Move into the tile
         pendingTargetPositions.Enqueue(currentTile.transform.position);
+        transform.position = currentTile.transform.position;
 
         stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_ANIMATION;
 
@@ -95,6 +96,7 @@ public class Boat : MonoBehaviour
 
         // Resolve resources in our destination
         this.Owner.Money += currentTile.GetResources();
+        stateManager.NewTurn();
     }
 
     // Attributes /////////////////////////////////////////////////////////////////////////////////
