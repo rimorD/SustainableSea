@@ -12,6 +12,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         this.lineLength = boardLength / 4;
+        this.stateManager = GameObject.FindObjectOfType<StateManager>();
 
         InitializeTileLists();
 
@@ -231,28 +232,29 @@ public class Board : MonoBehaviour
             }
         }
 
-        // ***********************************************************
-        // TEMPORAL, CUANDO SE CREEN LOS BARCOS DINAMICAMENTE CAMBIARÁ
+        // Creación de jugadores
 
-        Boat[] barcos = GameObject.FindObjectsOfType<Boat>();
-        Player[] jugadores = GameObject.FindObjectsOfType<Player>();
-        int playerId = 0;
-        foreach(Player jugador in jugadores)
+        GameObject PlayerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        GameObject PlayerContainer = GameObject.Find("Players");
+
+        GameObject BoatPrefab = Resources.Load<GameObject>("Prefabs/Barco");
+        GameObject BoatContainer = GameObject.Find("Barcos-Jugador");
+
+        for(int i = 0; i < StateManager.NumberOfPlayers; i++)
         {
-            jugador.PlayerId = playerId;
-            jugador.PlayerColor = (playerId == 0) ? Color.red : Color.blue;
-            playerId++;
-        }
+            GameObject newPlayerGameObject = GameObject.Instantiate(PlayerPrefab, PlayerContainer.transform);
+            Player newPlayer = newPlayerGameObject.GetComponent<Player>();
+            newPlayer.PlayerName = "Jugador " + (i+1);
+            newPlayer.PlayerId = i;
+            newPlayer.PlayerColor = StateManager.PlayerColors[i];
 
-        playerId = 0;
-        foreach(Boat barco in barcos)
-        {
-            Player jugador = jugadores.First<Player>((player) => player.PlayerId == playerId);
-            jugador.AddBoat(barco);
+            // Crear un barco para el jugador
+            GameObject boatGameObject = GameObject.Instantiate(BoatPrefab, initialTile.transform.position, Quaternion.identity, BoatContainer.transform);
+            Boat newBoat = boatGameObject.GetComponent<Boat>();
+            newBoat.SetCurrentTile(initialTile.GetComponent<Tile>());
+            newPlayer.AddBoat(newBoat);
 
-            playerId = playerId == 0 ? 1 : 0;
-
-            barco.SetCurrentTile(initialTile.GetComponent<Tile>());
+            stateManager.Players.Add(newPlayer);
         }
 
     }
@@ -318,6 +320,8 @@ public class Board : MonoBehaviour
     GameObject wallInnerRight;
     GameObject wallInnerBottom;
     GameObject wallInnerLeft;
+
+    StateManager stateManager;
 
     public TextAsset tileCountFile;
 }

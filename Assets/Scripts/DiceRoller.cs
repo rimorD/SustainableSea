@@ -29,6 +29,8 @@ public class DiceRoller : MonoBehaviour
     {
         if (stateManager.CurrentPhase != StateManager.TurnPhase.WAITING_FOR_ROLL)
             return;
+
+        stateManager.turnView.SetActive(false);
         StartCoroutine(DiceCoroutine());
     }
 
