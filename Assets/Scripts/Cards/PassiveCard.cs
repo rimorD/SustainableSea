@@ -39,27 +39,24 @@ public class PassiveCard : BaseCard, ICard
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
-    public PassiveCard(int pgs, int multiplier, string name) : base(pgs)
+    public PassiveCard(int pgs, int multiplier, string name) : base(pgs, name)
     {
         resourceMultiplier = multiplier;
-        cardName = name;
         affectsAdyacent = false;
         adyacentMultiplier = 1;
     }
 
     //---------------------------------------------------------------------------------------------
 
-    public PassiveCard(int pgs, int multiplier, string name, int adyacentTileMultiplier) : base(pgs)
+    public PassiveCard(int pgs, int multiplier, string name, int adyacentTileMultiplier) : base(pgs, name)
     {
         resourceMultiplier = multiplier;
-        cardName = name;
         affectsAdyacent = true;
         adyacentMultiplier = adyacentTileMultiplier;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
     public int resourceMultiplier;
-    public string cardName;
     public bool affectsAdyacent;
     public int adyacentMultiplier;
     Tile tileAttachedTo;

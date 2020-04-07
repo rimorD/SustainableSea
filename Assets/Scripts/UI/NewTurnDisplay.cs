@@ -18,7 +18,7 @@ public class NewTurnDisplay : MonoBehaviour
     void Update()
     {
         playerName.text = stateManager.CurrentPlayer().PlayerName;
-        playerMoney.text = "Dinero: " + stateManager.CurrentPlayer().Money;
+        playerMoney.text = stateManager.CurrentPlayer().Money + " CTS";
         playerPGS.text = stateManager.CurrentPlayer().PGS + " PGS";
         panelBackground.color = new Color
         (

@@ -21,8 +21,6 @@ public class Board : MonoBehaviour
         CreateBoardBackground();
 
         CreateBoardLimitWalls();
-
-        // TODO: Crear barcos iniciales
     }
 
     //---------------------------------------------------------------------------------------------

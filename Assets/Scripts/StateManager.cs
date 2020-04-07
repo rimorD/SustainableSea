@@ -8,7 +8,6 @@ public class StateManager : MonoBehaviour
 
     void Start()
     {
-        cardManager = GameObject.FindObjectOfType<CardManager>();
         Players = new List<Player>();
     }
 
@@ -23,8 +22,7 @@ public class StateManager : MonoBehaviour
 
     public void NewTurn()
     {
-        // Realmente sería WAITING_FOR_ACTION, pero por ahora solamente tiramos dados
-        CurrentPhase = TurnPhase.WAITING_FOR_ROLL;
+        CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
         CurrentPlayerId = CurrentPlayerId < NumberOfPlayers - 1 ? CurrentPlayerId + 1 : 0;
         turnView.SetActive(true);
     }
@@ -36,8 +34,76 @@ public class StateManager : MonoBehaviour
         return Players[CurrentPlayerId];
     }
 
+    //---------------------------------------------------------------------------------------------
+
+    public void PlayingCard()
+    {
+        CurrentPhase = TurnPhase.CARD_PLAYING;
+        ShowCardsView(false);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void DonePlayingCard()
+    {
+        CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
+        ShowTurnView(true);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void DiscardingCard()
+    {
+        CurrentPhase = TurnPhase.CARD_DISCARDING;
+        ShowCardsView(true);
+        cardsView.GetComponent<CardViewScript>().ShowDiscardingControls(true);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void DoneDiscardingCard()
+    {
+        CurrentPhase = TurnPhase.WAITING_FOR_ANIMATION;
+        cardsView.GetComponent<CardViewScript>().ShowDiscardingControls(false);
+        ShowCardsView(false);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void OpenCardsMenu(bool show)
+    {
+        cardsView.GetComponent<CardViewScript>().ShowCardsView(show);
+        ShowTurnView(!show);
+
+        CurrentPhase = (show) ? TurnPhase.CARD_VIEWING : TurnPhase.WAITING_FOR_ACTION;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ShowCardsView(bool show)
+    {
+        cardsView.GetComponent<CardViewScript>().ShowCardsView(show);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ShowTurnView(bool show)
+    {
+        turnView.SetActive(show);
+    }
+
     // Data ///////////////////////////////////////////////////////////////////////////////////////
-    public enum TurnPhase { WAITING_FOR_ROLL, WAITING_FOR_ACTION, WAITING_FOR_CLICK, WAITING_FOR_ANIMATION }
+    public enum TurnPhase 
+    {
+        WAITING_FOR_ROLL, 
+        WAITING_FOR_ACTION, 
+        WAITING_FOR_CLICK, 
+        WAITING_FOR_ANIMATION,
+        CARD_VIEWING,
+        CARD_SELLING,
+        CARD_PLAYING,
+        CARD_DISCARDING
+    }
     public TurnPhase CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
     public int LastRollResult;
 
@@ -46,9 +112,6 @@ public class StateManager : MonoBehaviour
     public static int NumberOfPlayers = 4;
     public List<Player> Players;
     public static Color[] PlayerColors = { Color.red, Color.blue, Color.green, Color.yellow };
-
-    // Cards
-    private CardManager cardManager;
 
     // UI layers
     public GameObject turnView;

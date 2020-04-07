@@ -19,5 +19,5 @@ public class TirarDado : BaseCard, ICard
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
-    public TirarDado(int pgs) : base(pgs) { }
+    public TirarDado(int pgs, string name) : base(pgs, name) { }
 }

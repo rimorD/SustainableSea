@@ -78,27 +78,27 @@ public class CardManager : MonoBehaviour
         switch (cardClass)
         {
             case "Voluntariado_Ambiental":
-                return new EliminarVertido(pgs);
+                return new EliminarVertido(pgs, "VolAmb");
             case "Area_Marina_Protegida":
                 return new PassiveCard(pgs, 0, "MPA", 2);
             case "Vedado":
                 return new PassiveCard(pgs, 0, "Vedado");
             case "Estudio_Genetico":
-                return new TirarDado(pgs);
+                return new TirarDado(pgs, "PGS");
             case "Vertido_Crudo":
                 return new PassiveCard(pgs, 0, "OilSpill", 0);
             case "Afloramiento_Nutrientes":
                 return new PassiveCard(pgs, 2, "Upwelling");
             case "Furtivos":
-                return new Furtivos(pgs);
+                return new Furtivos(pgs, "Furtivos");
             case "Fallo_Motor":
-                return new PerderTurno(pgs);
+                return new PerderTurno(pgs, "FalloMotor");
             case "Emporio_Comercial":
                 return new PassiveCard(pgs, 2, "Emporio");
             case "Ciclogenesis_Explosiva":
-                return new PerderTurno(pgs);
+                return new PerderTurno(pgs, "Ciclogenesis");
             case "Aparejos_Ilegales":
-                return new PerderDinero(pgs);
+                return new PerderDinero(pgs, "Aparejos");
             default:
                 return null;
         }
@@ -123,4 +123,9 @@ public class CardManager : MonoBehaviour
     public List<ICard> Deck;
     public List<ICard> DiscardPile;
     public TextAsset cardCountFile;
+
+    public ICard cardPlayed;
+
+    public const int PRECIO_COMPRA = 3000;
+    public const int PRECIO_VENTA = 1500;
 }

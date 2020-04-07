@@ -7,4 +7,5 @@ public interface ICard
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     void PlayCard(Player player, Tile tile);
     void DrawCard();
+    string CardName();
 }

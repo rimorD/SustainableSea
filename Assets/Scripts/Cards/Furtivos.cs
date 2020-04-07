@@ -19,5 +19,5 @@ public class Furtivos : BaseCard, ICard
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
-    public Furtivos(int pgs) : base(pgs) { }
+    public Furtivos(int pgs, string name) : base(pgs, name) { }
 }

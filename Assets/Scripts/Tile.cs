@@ -8,7 +8,8 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-        
+        stateManager = GameObject.FindObjectOfType<StateManager>();
+        cardManager = GameObject.FindObjectOfType<CardManager>();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -34,6 +35,20 @@ public class Tile : MonoBehaviour
         return resources * multiplier;
     }
 
+    //---------------------------------------------------------------------------------------------
+
+    public void OnMouseUp()
+    {
+        if (stateManager.CurrentPhase != StateManager.TurnPhase.CARD_PLAYING
+            || cardManager.cardPlayed == null
+            || !(cardManager.cardPlayed is PassiveCard))
+            return;
+
+        cardManager.cardPlayed.PlayCard(stateManager.CurrentPlayer(), this);
+        cardManager.cardPlayed = null;
+        stateManager.DonePlayingCard();
+    }
+
     // Data ///////////////////////////////////////////////////////////////////////////////////////
     public Tile nextTile;
     public Tile previousTile;
@@ -42,5 +57,8 @@ public class Tile : MonoBehaviour
     public bool isInitialTile = false;
     public bool isCorner = false;
     public PassiveCard passiveCard;
+
+    private StateManager stateManager;
+    private CardManager cardManager;
 
 }

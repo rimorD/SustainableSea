@@ -19,5 +19,5 @@ public class PerderTurno : BaseCard, ICard
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
-    public PerderTurno(int pgs) : base(pgs) { }
+    public PerderTurno(int pgs, string name) : base(pgs, name) { }
 }

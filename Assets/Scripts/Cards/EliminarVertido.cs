@@ -19,5 +19,5 @@ public class EliminarVertido : BaseCard, ICard
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
-    public EliminarVertido(int pgs) : base(pgs) { }
+    public EliminarVertido(int pgs, string name) : base(pgs, name) { }
 }

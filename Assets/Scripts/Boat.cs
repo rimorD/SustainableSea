@@ -16,7 +16,7 @@ public class Boat : MonoBehaviour
 
     void Update()
     {
-        if (isAnimating)
+        if (isAnimating && stateManager.CurrentPhase == StateManager.TurnPhase.WAITING_FOR_ANIMATION)
         {
             if (currentMovement != null && Vector3.Distance(transform.position, currentMovement.finalPosition) > SMOOTH_DISTANCE)
             {
@@ -125,7 +125,7 @@ public class Boat : MonoBehaviour
             }
             else
             {
-                Owner.cards.Add(drawnCard);
+                Owner.AddCard(drawnCard);
             }
         }
         // Move furtives if we rolled 1
