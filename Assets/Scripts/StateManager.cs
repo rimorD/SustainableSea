@@ -109,7 +109,7 @@ public class StateManager : MonoBehaviour
 
     // Player stuff
     public int CurrentPlayerId = 0;
-    public static int NumberOfPlayers = 4;
+    public static int NumberOfPlayers;
     public List<Player> Players;
     public static Color[] PlayerColors = { Color.red, Color.blue, Color.green, Color.yellow };
 

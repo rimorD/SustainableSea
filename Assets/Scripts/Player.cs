@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     public Color PlayerColor;
     public string PlayerAvatar;
     public int PlayerId;
-    public int Money = 15000;
+    public int Money;
     public int PGS;
     private List<Boat> boats;
     public List<ICard> cards;
