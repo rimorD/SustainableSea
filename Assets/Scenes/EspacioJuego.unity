@@ -731,7 +731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &578187826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -826,6 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsViewGeneralControls: {fileID: 1431502874}
   cardsViewSellingControls: {fileID: 1724687146}
+  cardsViewDiscardingControls: {fileID: 0}
   buyButton: {fileID: 1305483950}
   sellButton: {fileID: 1668853599}
   PlayerMoney: {fileID: 1535694887}
@@ -1185,7 +1186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1511189191}
-        m_MethodName: ShowCardsView
+        m_MethodName: OpenCardsMenu
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2134,7 +2135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1454750004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,7 +2248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147bbb085d131a34d8d5c099a6a81d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentPhase: 0
+  CurrentPhase: 1
   LastRollResult: 0
   CurrentPlayerId: 0
   Players: []
@@ -3144,7 +3145,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1511189191}
-        m_MethodName: ShowCardsView
+        m_MethodName: OpenCardsMenu
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
