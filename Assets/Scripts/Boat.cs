@@ -131,7 +131,7 @@ public class Boat : MonoBehaviour
         // Move furtives if we rolled 1
 
         // Resolve resources in our destination
-        this.Owner.Money += currentTile.GetResources();
+        this.Owner.AddMoney += currentTile.GetResources();
     }
 
     // Attributes /////////////////////////////////////////////////////////////////////////////////

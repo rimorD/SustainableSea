@@ -41,7 +41,10 @@ public class Tile : MonoBehaviour
     {
         if (stateManager.CurrentPhase != StateManager.TurnPhase.CARD_PLAYING
             || cardManager.cardPlayed == null
-            || !(cardManager.cardPlayed is PassiveCard))
+            || !(cardManager.cardPlayed is PassiveCard 
+                || (cardManager.cardPlayed is EliminarVertido 
+                    && this.passiveCard.CardName() == "OilSpill"
+                    && !passiveCard.isCloneFromAdyacent)))
             return;
 
         cardManager.cardPlayed.PlayCard(stateManager.CurrentPlayer(), this);

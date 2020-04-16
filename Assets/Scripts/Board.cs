@@ -169,6 +169,14 @@ public class Board : MonoBehaviour
             if (i == 0 || i == lineLength - 1)
             {
                 coastTile.GetComponent<Tile>().isCorner = true;
+
+                // Move furtives placeholder since its a corner
+                // Only the last one since the first one doesnt have a previous one yet
+                if (i == 0)
+                {
+                    coastTile.transform.Find("FurtivesPlaceholder").transform.position =
+                        lastTile.transform.Find("FurtivesPlaceholder").transform.position;
+                }
             }
 
             lastTile = coastTile;
@@ -204,6 +212,10 @@ public class Board : MonoBehaviour
             if (i == 0 || i == lineLength - 1)
             {
                 deepTile.GetComponent<Tile>().isCorner = true;
+
+                // Move furtives placeholder since its a corner
+                deepTile.transform.Find("FurtivesPlaceholder").transform.position =
+                    lastTile.transform.Find("FurtivesPlaceholder").transform.position;
             }
 
             lastTile = deepTile;
@@ -227,6 +239,10 @@ public class Board : MonoBehaviour
             {
                 mediumTileRight.GetComponent<Tile>().nextTile = initialTile.GetComponent<Tile>();
                 initialTile.GetComponent<Tile>().previousTile = mediumTileRight.GetComponent<Tile>();
+
+                // Move furtives placeholder since its a corner
+                initialTile.transform.Find("FurtivesPlaceholder").transform.position =
+                    lastTile.transform.Find("FurtivesPlaceholder").transform.position;
             }
         }
 
@@ -255,6 +271,8 @@ public class Board : MonoBehaviour
             stateManager.Players.Add(newPlayer);
         }
 
+        // We need to know which one is the initialTile later when we buy boats
+        stateManager.InitialTile = initialTile.GetComponent<Tile>();
     }
 
     //---------------------------------------------------------------------------------------------

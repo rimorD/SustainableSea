@@ -12,7 +12,7 @@ public class PassiveCard : BaseCard, ICard
 
         if(tile.passiveCard != null)
         {
-            GameObject.Destroy(tile.passiveCard.prefabInstance);
+            RemoveCard(tile);
         }
 
         tile.passiveCard = this;
@@ -21,9 +21,14 @@ public class PassiveCard : BaseCard, ICard
 
         if (this.affectsAdyacent)
         {
-            PassiveCard adyacentCard = new PassiveCard(0, adyacentMultiplier, cardName);
-            adyacentCard.PlayCard(player, tile.nextTile);
-            adyacentCard.PlayCard(player, tile.previousTile);
+            // We cant create a single card, otherwise there are errors when trying to remove them
+            PassiveCard nextTileCard = new PassiveCard(0, adyacentMultiplier, cardName);
+            nextTileCard.isCloneFromAdyacent = true;
+            nextTileCard.PlayCard(player, tile.nextTile);
+
+            PassiveCard previousTileCard = new PassiveCard(0, adyacentMultiplier, cardName);
+            previousTileCard.isCloneFromAdyacent = true;
+            previousTileCard.PlayCard(player, tile.previousTile);
         }
     }
 
@@ -35,6 +40,22 @@ public class PassiveCard : BaseCard, ICard
         GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/" + cardName);
         // Draw it in the tile placeholder
         prefabInstance = GameObject.Instantiate(cardPrefab, tileAttachedTo.transform.Find("CardPlaceholder").transform.position, tileAttachedTo.transform.rotation, tileAttachedTo.transform.parent);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public static void RemoveCard(Tile tile)
+    {   
+        if (tile.passiveCard.affectsAdyacent)
+        {
+            RemoveCard(tile.nextTile);
+            RemoveCard(tile.previousTile);
+        }
+
+        GameObject.Destroy(tile.passiveCard.prefabInstance);
+        tile.passiveCard.prefabInstance = null;
+
+        tile.passiveCard = null;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +79,7 @@ public class PassiveCard : BaseCard, ICard
     // Data ///////////////////////////////////////////////////////////////////////////////////////
     public int resourceMultiplier;
     public bool affectsAdyacent;
+    public bool isCloneFromAdyacent;
     public int adyacentMultiplier;
     Tile tileAttachedTo;
     GameObject prefabInstance;

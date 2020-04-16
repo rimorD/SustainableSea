@@ -8,6 +8,7 @@ public class PerderDinero : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
+        player.SubtractMoney += CANTIDAD_A_PERDER;
     }
 
     //---------------------------------------------------------------------------------------------

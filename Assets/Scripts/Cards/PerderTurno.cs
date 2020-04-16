@@ -8,6 +8,7 @@ public class PerderTurno : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
+        player.LostTurn = true;
     }
 
     //---------------------------------------------------------------------------------------------

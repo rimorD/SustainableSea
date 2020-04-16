@@ -62,7 +62,7 @@ public class CardViewScript : MonoBehaviour
     {
         ICard drawnCard = cardManager.DrawCardFromDeck();
         stateManager.CurrentPlayer().AddCard(drawnCard);
-        stateManager.CurrentPlayer().Money -= CardManager.PRECIO_COMPRA;
+        stateManager.CurrentPlayer().SubtractMoney += CardManager.PRECIO_COMPRA;
 
         LoadPlayerCards();
     }

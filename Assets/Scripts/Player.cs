@@ -16,7 +16,18 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        // Cool effects
+        if(SubtractMoney > 0 && Money > 0)
+        {
+            SubtractMoney -= 50;
+            Money -= 50;
+        }
+
+        if (AddMoney > 0)
+        {
+            AddMoney -= 50;
+            Money += 50;
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -53,8 +64,11 @@ public class Player : MonoBehaviour
     public Color PlayerColor;
     public string PlayerAvatar;
     public int PlayerId;
-    public int Money;
+    public int Money = 99999999;
+    public int SubtractMoney;
+    public int AddMoney;
     public int PGS;
+    public bool LostTurn = false;
     private List<Boat> boats;
     public List<ICard> cards;
 

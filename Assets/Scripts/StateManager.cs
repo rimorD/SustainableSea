@@ -24,6 +24,13 @@ public class StateManager : MonoBehaviour
     {
         CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
         CurrentPlayerId = CurrentPlayerId < NumberOfPlayers - 1 ? CurrentPlayerId + 1 : 0;
+
+        if (CurrentPlayer().LostTurn)
+        {
+            CurrentPlayer().LostTurn = false;
+            NewTurn();
+        }
+
         turnView.SetActive(true);
     }
 
@@ -106,6 +113,8 @@ public class StateManager : MonoBehaviour
     }
     public TurnPhase CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
     public int LastRollResult;
+
+    public Tile InitialTile;
 
     // Player stuff
     public int CurrentPlayerId = 0;

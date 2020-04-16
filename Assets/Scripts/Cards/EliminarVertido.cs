@@ -8,6 +8,7 @@ public class EliminarVertido : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
+        PassiveCard.RemoveCard(tile);
     }
 
     //---------------------------------------------------------------------------------------------
