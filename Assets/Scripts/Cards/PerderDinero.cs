@@ -8,7 +8,7 @@ public class PerderDinero : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
-        player.SubtractMoney += CANTIDAD_A_PERDER;
+        player.SubtractMoney += Definitions.CANTIDAD_A_PERDER_MULTA;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -21,7 +21,4 @@ public class PerderDinero : BaseCard, ICard
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
 
     public PerderDinero(int pgs, string name) : base(pgs, name) { }
-
-    // Data ///////////////////////////////////////////////////////////////////////////////////////
-    public const int CANTIDAD_A_PERDER = 2000;
 }

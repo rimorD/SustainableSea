@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         boat.Owner = this;
 
         // Bastante mejorable...
-        boat.GetComponentsInChildren<MeshRenderer>()[0].material.color = this.PlayerColor;
+        boat.GetComponentInChildren<MeshRenderer>().material.color = this.PlayerColor;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     public Color PlayerColor;
     public string PlayerAvatar;
     public int PlayerId;
-    public int Money = 99999999;
+    public int Money;
     public int SubtractMoney;
     public int AddMoney;
     public int PGS;

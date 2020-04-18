@@ -22,13 +22,13 @@ public class CardInventoryButton : MonoBehaviour
         switch (stateManager.CurrentPhase) 
         {
             case StateManager.TurnPhase.CARD_DISCARDING:
-                stateManager.CurrentPlayer().AddMoney += CardManager.PRECIO_VENTA;
+                stateManager.CurrentPlayer().AddMoney += Definitions.PRECIO_VENTA_CARTAS;
                 RemoveCard();
                 if(stateManager.CurrentPlayer().cards.Count <= 3)
                     stateManager.DoneDiscardingCard();
                 break;
             case StateManager.TurnPhase.CARD_SELLING:
-                stateManager.CurrentPlayer().AddMoney += CardManager.PRECIO_VENTA;
+                stateManager.CurrentPlayer().AddMoney += Definitions.PRECIO_VENTA_CARTAS;
 
                 RemoveCard();
                 break;

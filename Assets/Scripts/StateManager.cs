@@ -115,6 +115,7 @@ public class StateManager : MonoBehaviour
     public int LastRollResult;
 
     public Tile InitialTile;
+    public FurtiveBoat Furtives;
 
     // Player stuff
     public int CurrentPlayerId = 0;

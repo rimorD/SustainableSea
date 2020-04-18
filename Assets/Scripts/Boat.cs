@@ -18,13 +18,13 @@ public class Boat : MonoBehaviour
     {
         if (isAnimating && stateManager.CurrentPhase == StateManager.TurnPhase.WAITING_FOR_ANIMATION)
         {
-            if (currentMovement != null && Vector3.Distance(transform.position, currentMovement.finalPosition) > SMOOTH_DISTANCE)
+            if (currentMovement != null && Vector3.Distance(transform.position, currentMovement.finalPosition) > Definitions.SMOOTH_DISTANCE)
             {
-                this.transform.position = Vector3.SmoothDamp(transform.position, currentMovement.finalPosition, ref velocity, SMOOTH_TIME);
+                this.transform.position = Vector3.SmoothDamp(transform.position, currentMovement.finalPosition, ref velocity, Definitions.SMOOTH_TIME);
             }
-            else if(currentMovement != null && currentMovement.hasFinalRotation && Quaternion.Angle(transform.rotation, currentMovement.finalRotation) > MAX_DEGREES_DELTA)
+            else if(currentMovement != null && currentMovement.hasFinalRotation && Quaternion.Angle(transform.rotation, currentMovement.finalRotation) > Definitions.MAX_DEGREES_DELTA)
             {
-                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, currentMovement.finalRotation, MAX_DEGREES_DELTA);
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, currentMovement.finalRotation, Definitions.MAX_DEGREES_DELTA);
             }
             else
             {
@@ -64,7 +64,7 @@ public class Boat : MonoBehaviour
                 new Vector3
                 (
                     currentTile.transform.position.x, 
-                    currentTile.transform.position.y + SMOOTH_HEIGHT, 
+                    currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT, 
                     currentTile.transform.position.z
                 )
             )
@@ -82,7 +82,7 @@ public class Boat : MonoBehaviour
                 (
                     new Movement
                     (
-                        new Vector3(currentTile.transform.position.x, currentTile.transform.position.y + SMOOTH_HEIGHT, currentTile.transform.position.z),
+                        new Vector3(currentTile.transform.position.x, currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT, currentTile.transform.position.z),
                         Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z)
                     )
                 );
@@ -102,7 +102,7 @@ public class Boat : MonoBehaviour
                 new Vector3
                 (
                     currentTile.transform.position.x, 
-                    currentTile.transform.position.y + SMOOTH_HEIGHT, 
+                    currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT, 
                     currentTile.transform.position.z
                 )
             )
@@ -129,6 +129,10 @@ public class Boat : MonoBehaviour
             }
         }
         // Move furtives if we rolled 1
+        if (stateManager.LastRollResult == 1)
+        {
+            stateManager.Furtives.Move(currentTile);
+        }
 
         // Resolve resources in our destination
         this.Owner.AddMoney += currentTile.GetResources();
@@ -156,8 +160,4 @@ public class Boat : MonoBehaviour
     bool isAnimating = false;
     Queue<Movement> pendingMovements = new Queue<Movement>();
     Vector3 velocity;
-    const float SMOOTH_TIME = 0.25f;
-    const float SMOOTH_DISTANCE = 0.01f;
-    const float SMOOTH_HEIGHT = 0.5f;
-    const float MAX_DEGREES_DELTA = 2.5f;
 }

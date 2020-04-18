@@ -20,7 +20,7 @@ public class CardViewScript : MonoBehaviour
         if(gameObject.activeSelf)
         {
             PlayerMoney.text = stateManager.CurrentPlayer().Money + " CTS";
-            buyButton.interactable = stateManager.CurrentPlayer().Money >= CardManager.PRECIO_COMPRA
+            buyButton.interactable = stateManager.CurrentPlayer().Money >= Definitions.PRECIO_COMPRA_CARTAS
                                         && stateManager.CurrentPlayer().cards.Count < 3;
             sellButton.interactable = stateManager.CurrentPlayer().cards.Count > 0;
         }
@@ -62,7 +62,7 @@ public class CardViewScript : MonoBehaviour
     {
         ICard drawnCard = cardManager.DrawCardFromDeck();
         stateManager.CurrentPlayer().AddCard(drawnCard);
-        stateManager.CurrentPlayer().SubtractMoney += CardManager.PRECIO_COMPRA;
+        stateManager.CurrentPlayer().SubtractMoney += Definitions.PRECIO_COMPRA_CARTAS;
 
         LoadPlayerCards();
     }

@@ -271,6 +271,12 @@ public class Board : MonoBehaviour
             stateManager.Players.Add(newPlayer);
         }
 
+        // Spawn furtive boat
+        GameObject FurtivePrefab = Resources.Load<GameObject>("Prefabs/Furtivo");
+        GameObject furtives = Instantiate(FurtivePrefab, new Vector3(lineLength/2 - 0.5f, 0, lineLength/2 + 0.5f), Quaternion.identity, transform);
+        furtives.GetComponentInChildren<MeshRenderer>().material.color = Color.black;
+        stateManager.Furtives = furtives.GetComponent<FurtiveBoat>();
+
         // We need to know which one is the initialTile later when we buy boats
         stateManager.InitialTile = initialTile.GetComponent<Tile>();
     }

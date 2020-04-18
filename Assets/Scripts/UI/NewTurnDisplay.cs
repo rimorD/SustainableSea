@@ -25,7 +25,7 @@ public class NewTurnDisplay : MonoBehaviour
             stateManager.CurrentPlayer().PlayerColor.r,
             stateManager.CurrentPlayer().PlayerColor.g,
             stateManager.CurrentPlayer().PlayerColor.b,
-            PANEL_BACKGROUND_OPACITY
+            Definitions.NEWTURN_PANEL_BACKGROUND_OPACITY
         );
     }
 
@@ -39,6 +39,4 @@ public class NewTurnDisplay : MonoBehaviour
     public Image playerAvatar;
 
     Image panelBackground;
-
-    private const float PANEL_BACKGROUND_OPACITY = 0.5f;
 }

@@ -125,7 +125,4 @@ public class CardManager : MonoBehaviour
     public TextAsset cardCountFile;
 
     public ICard cardPlayed;
-
-    public const int PRECIO_COMPRA = 3000;
-    public const int PRECIO_VENTA = 1500;
 }
