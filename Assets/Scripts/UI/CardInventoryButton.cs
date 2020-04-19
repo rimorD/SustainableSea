@@ -22,13 +22,13 @@ public class CardInventoryButton : MonoBehaviour
         switch (stateManager.CurrentPhase) 
         {
             case StateManager.TurnPhase.CARD_DISCARDING:
-                stateManager.CurrentPlayer().AddMoney += Definitions.PRECIO_VENTA_CARTAS;
+                stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
                 RemoveCard();
                 if(stateManager.CurrentPlayer().cards.Count <= 3)
                     stateManager.DoneDiscardingCard();
                 break;
             case StateManager.TurnPhase.CARD_SELLING:
-                stateManager.CurrentPlayer().AddMoney += Definitions.PRECIO_VENTA_CARTAS;
+                stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
 
                 RemoveCard();
                 break;
@@ -47,7 +47,7 @@ public class CardInventoryButton : MonoBehaviour
         stateManager.CurrentPlayer().cards.Remove(RepresentedCard);
         cardManager.DiscardPile.Add(RepresentedCard);
         Destroy(gameObject);
-        stateManager.cardsView.GetComponent<CardViewScript>().LoadPlayerCards();
+        stateManager.cardsView.GetComponent<CardMenu>().LoadPlayerCards();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

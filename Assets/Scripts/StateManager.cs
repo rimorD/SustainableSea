@@ -32,6 +32,7 @@ public class StateManager : MonoBehaviour
         }
 
         turnView.SetActive(true);
+        boardView.SetActive(false);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -47,6 +48,7 @@ public class StateManager : MonoBehaviour
     {
         CurrentPhase = TurnPhase.CARD_PLAYING;
         ShowCardsView(false);
+        ShowBoardView(true);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -55,6 +57,7 @@ public class StateManager : MonoBehaviour
     {
         CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
         ShowTurnView(true);
+        ShowBoardView(false);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -63,7 +66,7 @@ public class StateManager : MonoBehaviour
     {
         CurrentPhase = TurnPhase.CARD_DISCARDING;
         ShowCardsView(true);
-        cardsView.GetComponent<CardViewScript>().ShowDiscardingControls(true);
+        cardsView.GetComponent<CardMenu>().ShowDiscardingControls(true);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -71,7 +74,7 @@ public class StateManager : MonoBehaviour
     public void DoneDiscardingCard()
     {
         CurrentPhase = TurnPhase.WAITING_FOR_ANIMATION;
-        cardsView.GetComponent<CardViewScript>().ShowDiscardingControls(false);
+        cardsView.GetComponent<CardMenu>().ShowDiscardingControls(false);
         ShowCardsView(false);
     }
 
@@ -79,7 +82,7 @@ public class StateManager : MonoBehaviour
 
     public void OpenCardsMenu(bool show)
     {
-        cardsView.GetComponent<CardViewScript>().ShowCardsView(show);
+        cardsView.GetComponent<CardMenu>().ShowCardsView(show);
         ShowTurnView(!show);
 
         CurrentPhase = (show) ? TurnPhase.CARD_VIEWING : TurnPhase.WAITING_FOR_ACTION;
@@ -87,9 +90,19 @@ public class StateManager : MonoBehaviour
 
     //---------------------------------------------------------------------------------------------
 
+    public void ViewBoard(bool show)
+    {
+        ShowBoardView(show);
+        ShowTurnView(!show);
+
+        CurrentPhase = (show) ? TurnPhase.BOARD_VIEWING : TurnPhase.WAITING_FOR_ACTION;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public void ShowCardsView(bool show)
     {
-        cardsView.GetComponent<CardViewScript>().ShowCardsView(show);
+        cardsView.GetComponent<CardMenu>().ShowCardsView(show);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -97,6 +110,14 @@ public class StateManager : MonoBehaviour
     public void ShowTurnView(bool show)
     {
         turnView.SetActive(show);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ShowBoardView(bool show, bool withGoBack = true)
+    {
+        boardView.SetActive(show);
+        boardView.GetComponent<BoardView>().ConfigureUI(withGoBack);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +130,8 @@ public class StateManager : MonoBehaviour
         CARD_VIEWING,
         CARD_SELLING,
         CARD_PLAYING,
-        CARD_DISCARDING
+        CARD_DISCARDING,
+        BOARD_VIEWING
     }
     public TurnPhase CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
     public int LastRollResult;
@@ -126,4 +148,5 @@ public class StateManager : MonoBehaviour
     // UI layers
     public GameObject turnView;
     public GameObject cardsView;
+    public GameObject boardView;
 }

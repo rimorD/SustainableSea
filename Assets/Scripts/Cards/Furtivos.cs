@@ -8,13 +8,15 @@ public class Furtivos : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
+
+        GameObject.FindObjectOfType<StateManager>().Furtives.Move(tile);
     }
 
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public override bool PlayableInTile(Tile targetTile)
     {
-
+        return !targetTile.furtives;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

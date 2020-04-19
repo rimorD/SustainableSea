@@ -41,10 +41,7 @@ public class Tile : MonoBehaviour
     {
         if (stateManager.CurrentPhase != StateManager.TurnPhase.CARD_PLAYING
             || cardManager.cardPlayed == null
-            || !(cardManager.cardPlayed is PassiveCard 
-                || (cardManager.cardPlayed is EliminarVertido 
-                    && this.passiveCard.CardName() == "OilSpill"
-                    && !passiveCard.isCloneFromAdyacent)))
+            || !cardManager.cardPlayed.PlayableInTile(this))
             return;
 
         cardManager.cardPlayed.PlayCard(stateManager.CurrentPlayer(), this);
@@ -57,6 +54,7 @@ public class Tile : MonoBehaviour
     public Tile previousTile;
     public int resources;
     public bool furtives = false;
+    public bool overexploited = false;
     public bool isInitialTile = false;
     public bool isCorner = false;
     public PassiveCard passiveCard;

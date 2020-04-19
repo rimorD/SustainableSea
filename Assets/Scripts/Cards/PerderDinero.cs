@@ -8,14 +8,14 @@ public class PerderDinero : BaseCard, ICard
     public override void PlayCard(Player player, Tile tile)
     {
         base.PlayCard(player, tile);
-        player.SubtractMoney += Definitions.CANTIDAD_A_PERDER_MULTA;
+        player.Money -= (player.Money > Definitions.CANTIDAD_A_PERDER_MULTA) ? Definitions.CANTIDAD_A_PERDER_MULTA : player.Money;
     }
 
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public override bool PlayableInPlayer(Player targetPlayer)
     {
-
+        return targetPlayer.Money > 0;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

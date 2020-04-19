@@ -6,6 +6,7 @@ public interface ICard
 {
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     void PlayCard(Player player, Tile tile);
-    void DrawCard();
     string CardName();
+    bool PlayableInTile(Tile targetTile);
+    bool PlayableInPlayer(Player targetPlayer);
 }

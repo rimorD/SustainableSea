@@ -135,7 +135,7 @@ public class Boat : MonoBehaviour
         }
 
         // Resolve resources in our destination
-        this.Owner.AddMoney += currentTile.GetResources();
+        this.Owner.Money += currentTile.GetResources();
     }
 
     // Attributes /////////////////////////////////////////////////////////////////////////////////

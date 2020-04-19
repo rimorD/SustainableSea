@@ -22,7 +22,17 @@ public abstract class BaseCard : ICard
 
     //---------------------------------------------------------------------------------------------
 
-    public abstract void DrawCard();
+    public virtual bool PlayableInTile(Tile targetTile)
+    {
+        return false;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public virtual bool PlayableInPlayer(Player targetPlayer)
+    {
+        return false;
+    }
 
     //---------------------------------------------------------------------------------------------
 

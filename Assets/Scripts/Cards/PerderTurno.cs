@@ -13,9 +13,9 @@ public class PerderTurno : BaseCard, ICard
 
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public override bool PlayableInPlayer(Player targetPlayer)
     {
-
+        return !targetPlayer.LostTurn;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

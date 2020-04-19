@@ -11,11 +11,14 @@ public class EliminarVertido : BaseCard, ICard
         PassiveCard.RemoveCard(tile);
     }
 
+
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public override bool PlayableInTile(Tile targetTile)
     {
-        
+        return targetTile.passiveCard != null 
+            && targetTile.passiveCard.CardName() == "OilSpill"
+            && !targetTile.passiveCard.isCloneFromAdyacent;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

@@ -31,6 +31,7 @@ public class DiceRoller : MonoBehaviour
             return;
 
         stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_ROLL;
+        stateManager.ShowBoardView(true, false);
         stateManager.turnView.SetActive(false);
         StartCoroutine(DiceCoroutine());
     }

@@ -34,7 +34,7 @@ public class PassiveCard : BaseCard, ICard
 
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public void DrawCard()
     {
         // Load specific card prefab
         GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/" + cardName);
@@ -56,6 +56,13 @@ public class PassiveCard : BaseCard, ICard
         tile.passiveCard.prefabInstance = null;
 
         tile.passiveCard = null;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public override bool PlayableInTile(Tile targetTile)
+    {
+        return true;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////

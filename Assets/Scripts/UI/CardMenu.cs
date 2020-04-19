@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardViewScript : MonoBehaviour
+public class CardMenu : MonoBehaviour
 {
     // Methods ////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +62,7 @@ public class CardViewScript : MonoBehaviour
     {
         ICard drawnCard = cardManager.DrawCardFromDeck();
         stateManager.CurrentPlayer().AddCard(drawnCard);
-        stateManager.CurrentPlayer().SubtractMoney += Definitions.PRECIO_COMPRA_CARTAS;
+        stateManager.CurrentPlayer().Money -= Definitions.PRECIO_COMPRA_CARTAS;
 
         LoadPlayerCards();
     }

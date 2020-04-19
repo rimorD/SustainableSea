@@ -12,9 +12,9 @@ public class TirarDado : BaseCard, ICard
 
     //---------------------------------------------------------------------------------------------
 
-    public override void DrawCard()
+    public override bool PlayableInTile(Tile targetTile)
     {
-
+        return !targetTile.overexploited;
     }
 
     // Ctor ///////////////////////////////////////////////////////////////////////////////////////
