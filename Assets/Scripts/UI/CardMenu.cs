@@ -45,7 +45,15 @@ public class CardMenu : MonoBehaviour
         cardsViewSellingControls.SetActive(show);
         cardsViewGeneralControls.SetActive(!show);
 
-        stateManager.CurrentPhase = (show) ? StateManager.TurnPhase.CARD_SELLING : StateManager.TurnPhase.CARD_VIEWING;
+        if (show)
+        {
+            stateManager.CurrentState = CardSelling.GetInstance();
+        }
+        else
+        {
+            stateManager.CurrentState = CardViewing.GetInstance();
+        }
+
     }
 
     //---------------------------------------------------------------------------------------------

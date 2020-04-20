@@ -26,14 +26,7 @@ public class BoardView : MonoBehaviour
         StateManager stateManager = stateManagerGO.GetComponent<StateManager>();
         CardManager cardManager = cardManagerGO.GetComponent<CardManager>();
 
-        if (stateManager.CurrentPhase != StateManager.TurnPhase.CARD_PLAYING
-            || cardManager.cardPlayed == null
-            || !cardManager.cardPlayed.PlayableInPlayer(stateManager.Players[playerId]))
-            return;
-
-        cardManager.cardPlayed.PlayCard(stateManager.Players[playerId], null);
-        cardManager.cardPlayed = null;
-        stateManager.DonePlayingCard();
+        stateManager.CurrentState.PlayerClick(stateManager, cardManager, playerId);
     }
 
     //---------------------------------------------------------------------------------------------

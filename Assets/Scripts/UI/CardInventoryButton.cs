@@ -19,30 +19,10 @@ public class CardInventoryButton : MonoBehaviour
 
     public void OnClick()
     {
-        switch (stateManager.CurrentPhase) 
-        {
-            case StateManager.TurnPhase.CARD_DISCARDING:
-                stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
-                RemoveCard();
-                if(stateManager.CurrentPlayer().cards.Count <= 3)
-                    stateManager.DoneDiscardingCard();
-                break;
-            case StateManager.TurnPhase.CARD_SELLING:
-                stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
-
-                RemoveCard();
-                break;
-            case StateManager.TurnPhase.CARD_VIEWING:
-                cardManager.cardPlayed = RepresentedCard;
-
-                stateManager.PlayingCard();
-
-                RemoveCard();
-                break;
-        }
+        stateManager.CurrentState.InventoryCardClick(stateManager, cardManager, this);
     }
 
-    private void RemoveCard()
+    public void RemoveCard()
     {
         stateManager.CurrentPlayer().cards.Remove(RepresentedCard);
         cardManager.DiscardPile.Add(RepresentedCard);

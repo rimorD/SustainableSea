@@ -39,14 +39,7 @@ public class Tile : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (stateManager.CurrentPhase != StateManager.TurnPhase.CARD_PLAYING
-            || cardManager.cardPlayed == null
-            || !cardManager.cardPlayed.PlayableInTile(this))
-            return;
-
-        cardManager.cardPlayed.PlayCard(stateManager.CurrentPlayer(), this);
-        cardManager.cardPlayed = null;
-        stateManager.DonePlayingCard();
+        stateManager.CurrentState.TileOnClick(stateManager, cardManager, this);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@ public class StateManager : MonoBehaviour
 
     public void NewTurn()
     {
-        CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
+        CurrentState = WaitingForAction.GetInstance();
         CurrentPlayerId = CurrentPlayerId < NumberOfPlayers - 1 ? CurrentPlayerId + 1 : 0;
 
         if (CurrentPlayer().LostTurn)
@@ -46,7 +46,7 @@ public class StateManager : MonoBehaviour
 
     public void PlayingCard()
     {
-        CurrentPhase = TurnPhase.CARD_PLAYING;
+        CurrentState = CardPlaying.GetInstance();
         ShowCardsView(false);
         ShowBoardView(true);
     }
@@ -55,7 +55,7 @@ public class StateManager : MonoBehaviour
 
     public void DonePlayingCard()
     {
-        CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
+        CurrentState = WaitingForAction.GetInstance();
         ShowTurnView(true);
         ShowBoardView(false);
     }
@@ -64,7 +64,7 @@ public class StateManager : MonoBehaviour
 
     public void DiscardingCard()
     {
-        CurrentPhase = TurnPhase.CARD_DISCARDING;
+        CurrentState = CardDiscarding.GetInstance();
         ShowCardsView(true);
         cardsView.GetComponent<CardMenu>().ShowDiscardingControls(true);
     }
@@ -73,7 +73,7 @@ public class StateManager : MonoBehaviour
 
     public void DoneDiscardingCard()
     {
-        CurrentPhase = TurnPhase.WAITING_FOR_ANIMATION;
+        CurrentState = WaitingForAnimation.GetInstance();
         cardsView.GetComponent<CardMenu>().ShowDiscardingControls(false);
         ShowCardsView(false);
     }
@@ -85,7 +85,14 @@ public class StateManager : MonoBehaviour
         cardsView.GetComponent<CardMenu>().ShowCardsView(show);
         ShowTurnView(!show);
 
-        CurrentPhase = (show) ? TurnPhase.CARD_VIEWING : TurnPhase.WAITING_FOR_ACTION;
+        if (show)
+        {
+            CurrentState = CardViewing.GetInstance();
+        }
+        else
+        {
+            CurrentState = WaitingForAction.GetInstance();
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -95,7 +102,14 @@ public class StateManager : MonoBehaviour
         ShowBoardView(show);
         ShowTurnView(!show);
 
-        CurrentPhase = (show) ? TurnPhase.BOARD_VIEWING : TurnPhase.WAITING_FOR_ACTION;
+        if (show)
+        {
+            CurrentState = BoardViewing.GetInstance();
+        }
+        else
+        {
+            CurrentState = WaitingForAction.GetInstance();
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -121,19 +135,7 @@ public class StateManager : MonoBehaviour
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
-    public enum TurnPhase 
-    {
-        WAITING_FOR_ROLL, 
-        WAITING_FOR_ACTION, 
-        WAITING_FOR_CLICK, 
-        WAITING_FOR_ANIMATION,
-        CARD_VIEWING,
-        CARD_SELLING,
-        CARD_PLAYING,
-        CARD_DISCARDING,
-        BOARD_VIEWING
-    }
-    public TurnPhase CurrentPhase = TurnPhase.WAITING_FOR_ACTION;
+    public IGameState CurrentState = WaitingForAction.GetInstance();
     public int LastRollResult;
 
     public Tile InitialTile;

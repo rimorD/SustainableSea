@@ -27,10 +27,10 @@ public class DiceRoller : MonoBehaviour
 
     public void Roll()
     {
-        if (stateManager.CurrentPhase != StateManager.TurnPhase.WAITING_FOR_ACTION)
+        if (stateManager.CurrentState != WaitingForAction.GetInstance())
             return;
 
-        stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_ROLL;
+        stateManager.CurrentState = WaitingForRoll.GetInstance();
         stateManager.ShowBoardView(true, false);
         stateManager.turnView.SetActive(false);
         StartCoroutine(DiceCoroutine());
@@ -122,7 +122,7 @@ public class DiceRoller : MonoBehaviour
         Debug.Log(lastRollResult);
 
         stateManager.LastRollResult = lastRollResult;
-        stateManager.CurrentPhase = StateManager.TurnPhase.WAITING_FOR_CLICK;
+        stateManager.CurrentState = WaitingForClick.GetInstance();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
