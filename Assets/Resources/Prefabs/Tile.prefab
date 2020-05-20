@@ -143,6 +143,7 @@ MonoBehaviour:
   previousTile: {fileID: 0}
   resources: 0
   furtives: 0
+  overexploited: 0
   isInitialTile: 0
   isCorner: 0
 --- !u!54 &5183743421820851748
