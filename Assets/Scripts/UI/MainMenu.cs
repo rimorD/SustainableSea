@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     // Methods ////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
-        
+        LangManager.InitializeLangManager();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -31,6 +31,13 @@ public class MainMenu : MonoBehaviour
     {
         StateManager.NumberOfPlayers = numberOfPlayers;
         SceneManager.LoadScene(1);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ChangeLanguage(string langCode)
+    {
+        LangManager.ChangeLanguage(langCode);
     }
 
     //---------------------------------------------------------------------------------------------

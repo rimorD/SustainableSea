@@ -10,6 +10,8 @@ public class CardMenu : MonoBehaviour
     void Start()
     {
         cardManager = GameObject.FindObjectOfType<CardManager>();
+        BuyingTip.GetComponentInChildren<Text>().text = LangManager.GetTranslation(string.Format(LangManager.GetTranslation("currency_abreviation"), Definitions.PRECIO_COMPRA_CARTAS));
+        SellingTip.GetComponentInChildren<Text>().text = LangManager.GetTranslation(string.Format(LangManager.GetTranslation("currency_abreviation"), Definitions.PRECIO_VENTA_CARTAS));
     }
 
     //---------------------------------------------------------------------------------------------
@@ -19,7 +21,7 @@ public class CardMenu : MonoBehaviour
         // Only update controls if were seeing them
         if(gameObject.activeSelf)
         {
-            PlayerMoney.text = stateManager.CurrentPlayer().Money + " CTS";
+            PlayerMoney.text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.CurrentPlayer().Money);
             buyButton.interactable = stateManager.CurrentPlayer().Money >= Definitions.PRECIO_COMPRA_CARTAS
                                         && stateManager.CurrentPlayer().cards.Count < 3;
             sellButton.interactable = stateManager.CurrentPlayer().cards.Count > 0;
@@ -116,4 +118,6 @@ public class CardMenu : MonoBehaviour
     public Button sellButton;
     public Text PlayerMoney;
     public GameObject CardsPanel;
+    public GameObject BuyingTip;
+    public GameObject SellingTip;
 }

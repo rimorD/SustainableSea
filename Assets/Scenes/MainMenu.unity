@@ -345,7 +345,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Volver
+  m_Text: go_back
 --- !u!222 &114144114
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 133368534}
   - component: {fileID: 133368533}
   - component: {fileID: 133368532}
+  - component: {fileID: 133368535}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -483,6 +484,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133368530}
   m_CullTransparentMesh: 0
+--- !u!114 &133368535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133368530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &366364341
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +564,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Salir
+  m_Text: mainmenu_quit
 --- !u!222 &366364344
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -628,7 +641,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2 JUGADORES
+  m_Text: newgame_2players
 --- !u!222 &566655322
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -722,6 +735,7 @@ GameObject:
   - component: {fileID: 1350467420}
   - component: {fileID: 1350467419}
   - component: {fileID: 1350467418}
+  - component: {fileID: 1350467421}
   m_Layer: 5
   m_Name: 3P
   m_TagString: Untagged
@@ -839,6 +853,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350467416}
   m_CullTransparentMesh: 0
+--- !u!114 &1350467421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350467416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1439050069
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,6 +877,7 @@ GameObject:
   - component: {fileID: 1439050073}
   - component: {fileID: 1439050072}
   - component: {fileID: 1439050071}
+  - component: {fileID: 1439050074}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -968,6 +995,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439050069}
   m_CullTransparentMesh: 0
+--- !u!114 &1439050074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439050069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1499175962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1110,7 @@ GameObject:
   - component: {fileID: 1507172664}
   - component: {fileID: 1507172663}
   - component: {fileID: 1507172662}
+  - component: {fileID: 1507172665}
   m_Layer: 5
   m_Name: 2P
   m_TagString: Untagged
@@ -1188,6 +1228,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507172660}
   m_CullTransparentMesh: 0
+--- !u!114 &1507172665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507172660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1515323840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,7 +1386,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1636855236}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 37636982}
+        m_MethodName: ChangeLanguage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: ES
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1636855236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1512,7 +1575,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4 JUGADORES
+  m_Text: newgame_4players
 --- !u!222 &1826420510
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1616,6 +1679,7 @@ GameObject:
   - component: {fileID: 1881923111}
   - component: {fileID: 1881923110}
   - component: {fileID: 1881923109}
+  - component: {fileID: 1881923112}
   m_Layer: 5
   m_Name: NewGame
   m_TagString: Untagged
@@ -1733,6 +1797,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881923107}
   m_CullTransparentMesh: 0
+--- !u!114 &1881923112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881923107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1939581940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1821,7 @@ GameObject:
   - component: {fileID: 1939581944}
   - component: {fileID: 1939581943}
   - component: {fileID: 1939581942}
+  - component: {fileID: 1939581945}
   m_Layer: 5
   m_Name: 4P
   m_TagString: Untagged
@@ -1862,6 +1939,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939581940}
   m_CullTransparentMesh: 0
+--- !u!114 &1939581945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939581940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1951113334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +2019,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3 JUGADORES
+  m_Text: newgame_3players
 --- !u!222 &1951113337
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2007,7 +2096,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Nueva Partida
+  m_Text: mainmenu_new_game
 --- !u!222 &1980344025
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2027,6 +2116,7 @@ GameObject:
   - component: {fileID: 2001973722}
   - component: {fileID: 2001973724}
   - component: {fileID: 2001973723}
+  - component: {fileID: 2001973725}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -2084,7 +2174,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\xA1A LA MAR, MARINEROS!"
+  m_Text: mainmenu_title
 --- !u!222 &2001973724
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2093,6 +2183,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001973721}
   m_CullTransparentMesh: 0
+--- !u!114 &2001973725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001973721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125a4738fbe0ced4eb371ec17ad69130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2049253962
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,7 +2275,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2049253965}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 37636982}
+        m_MethodName: ChangeLanguage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: EN
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2049253965
 MonoBehaviour:
   m_ObjectHideFlags: 0

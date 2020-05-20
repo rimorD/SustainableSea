@@ -17,4 +17,10 @@ public static class Definitions
 
     // UI
     public const float NEWTURN_PANEL_BACKGROUND_OPACITY = 0.5f;
+
+    // Lang
+    public const string TRANSLATIONS_FILENAME = "strings";
+    public const string TRANSLATIONS_FILEEXT = "txt";
+    public const string ACCEPTED_LANGUAGES = "ES;EN";
+    public const string DEFAULT_LANGUAGE = "ES";
 }

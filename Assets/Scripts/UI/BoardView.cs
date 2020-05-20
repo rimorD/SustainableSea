@@ -39,15 +39,15 @@ public class BoardView : MonoBehaviour
         Text player1Name = Player1UI.transform.Find("PlayerName").GetComponent<Text>();
         player1Name.color = stateManager.Players[0].PlayerColor;
         player1Name.text = stateManager.Players[0].PlayerName;
-        Player1UI.transform.Find("PlayerMoney").GetComponent<Text>().text = stateManager.Players[0].Money + " CTS";
-        Player1UI.transform.Find("PlayerPGS").GetComponent<Text>().text = stateManager.Players[0].PGS + " PGS";
+        Player1UI.transform.Find("PlayerMoney").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.Players[0].Money);
+        Player1UI.transform.Find("PlayerPGS").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("points_abreviation"), stateManager.Players[0].PGS);
 
         Player2UI.SetActive(true);
         Text player2Name = Player2UI.transform.Find("PlayerName").GetComponent<Text>();
         player2Name.color = stateManager.Players[1].PlayerColor;
         player2Name.text = stateManager.Players[1].PlayerName;
-        Player2UI.transform.Find("PlayerMoney").GetComponent<Text>().text = stateManager.Players[1].Money + " CTS";
-        Player2UI.transform.Find("PlayerPGS").GetComponent<Text>().text = stateManager.Players[1].PGS + " PGS";
+        Player2UI.transform.Find("PlayerMoney").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.Players[1].Money);
+        Player2UI.transform.Find("PlayerPGS").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("points_abreviation"), stateManager.Players[1].PGS);
 
         if (StateManager.NumberOfPlayers > 2)
         {
@@ -55,8 +55,8 @@ public class BoardView : MonoBehaviour
             Text player3Name = Player3UI.transform.Find("PlayerName").GetComponent<Text>();
             player3Name.color = stateManager.Players[2].PlayerColor;
             player3Name.text = stateManager.Players[2].PlayerName;
-            Player3UI.transform.Find("PlayerMoney").GetComponent<Text>().text = stateManager.Players[2].Money + " CTS";
-            Player3UI.transform.Find("PlayerPGS").GetComponent<Text>().text = stateManager.Players[2].PGS + " PGS";
+            Player3UI.transform.Find("PlayerMoney").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.Players[2].Money);
+            Player3UI.transform.Find("PlayerPGS").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("points_abreviation"), stateManager.Players[2].PGS);
 
             if (StateManager.NumberOfPlayers > 3)
             {
@@ -64,8 +64,8 @@ public class BoardView : MonoBehaviour
                 Text player4Name = Player4UI.transform.Find("PlayerName").GetComponent<Text>();
                 player4Name.color = stateManager.Players[3].PlayerColor;
                 player4Name.text = stateManager.Players[3].PlayerName;
-                Player4UI.transform.Find("PlayerMoney").GetComponent<Text>().text = stateManager.Players[3].Money + " CTS";
-                Player4UI.transform.Find("PlayerPGS").GetComponent<Text>().text = stateManager.Players[3].PGS + " PGS";
+                Player4UI.transform.Find("PlayerMoney").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.Players[3].Money);
+                Player4UI.transform.Find("PlayerPGS").GetComponent<Text>().text = string.Format(LangManager.GetTranslation("points_abreviation"), stateManager.Players[3].PGS);
             }
         }
 
