@@ -26,6 +26,19 @@ public class Boat : MonoBehaviour
         stateManager.CurrentState.BoatOnClick(stateManager, cardManager, this);
     }
 
+    //---------------------------------------------------------------------------------------------
+
+    public void CollectResources()
+    {
+        int resources = currentTile.GetResources();
+        if(boatType == BoatType.TRAIL)
+        {
+            resources *= 2;
+            currentTile.overexploited = true;
+        }
+        Owner.Money += resources;
+    }
+
     // Attributes /////////////////////////////////////////////////////////////////////////////////
 
     public void SetCurrentTile (Tile tile)

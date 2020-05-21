@@ -41,4 +41,11 @@ public class BaseGameState : IGameState
     {
         return;
     }
+
+    //---------------------------------------------------------------------------------------------
+
+    public virtual void CameraUpdate(CameraManager camera)
+    {
+        return;
+    }
 }

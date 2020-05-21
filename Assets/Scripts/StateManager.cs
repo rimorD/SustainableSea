@@ -132,6 +132,9 @@ public class StateManager : MonoBehaviour
     {
         boardView.SetActive(show);
         boardView.GetComponent<BoardView>().ConfigureUI(withGoBack);
+
+        Camera.main.transform.position = Definitions.CAMERA_POSITION;
+        Camera.main.transform.rotation = Definitions.CAMERA_ROTATION;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

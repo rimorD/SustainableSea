@@ -18,6 +18,11 @@ public static class Definitions
     // UI
     public const float NEWTURN_PANEL_BACKGROUND_OPACITY = 0.5f;
 
+    // Camera
+    public const float CAMERA_SPEED = 2.0f;
+    public static Vector3 CAMERA_POSITION = new Vector3(4.5f, 9.0f, 5.5f);
+    public static Quaternion CAMERA_ROTATION = Quaternion.Euler(90f, 0, 90f);
+
     // Lang
     public const string TRANSLATIONS_FILENAME = "strings";
     public const string TRANSLATIONS_FILEEXT = "txt";

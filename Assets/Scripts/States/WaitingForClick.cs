@@ -106,7 +106,7 @@ public class WaitingForClick : BaseGameState, IGameState
         }
 
         // Resolve resources in our destination
-        boat.Owner.Money += boat.currentTile.GetResources();
+        boat.CollectResources();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
