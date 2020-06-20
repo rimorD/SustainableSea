@@ -45,7 +45,7 @@ public static class LangManager
     {
         translations = new Dictionary<string, string>();
         string resourcesFileName = string.Format("{0}.{1}.{2}", Definitions.TRANSLATIONS_FILENAME, currentLang.ToString(), Definitions.TRANSLATIONS_FILEEXT);
-        StreamReader reader = new StreamReader(string.Format("Assets/Resources/Translations/{0}", resourcesFileName));
+        StreamReader reader = new StreamReader(string.Format("Assets/Resources/{0}", resourcesFileName));
 
         while(reader.Peek() >= 0)
         {
