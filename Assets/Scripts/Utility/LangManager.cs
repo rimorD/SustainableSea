@@ -44,17 +44,15 @@ public static class LangManager
     private static void LoadTranslationFromFile()
     {
         translations = new Dictionary<string, string>();
-        string resourcesFileName = string.Format("{0}.{1}.{2}", Definitions.TRANSLATIONS_FILENAME, currentLang.ToString(), Definitions.TRANSLATIONS_FILEEXT);
-        StreamReader reader = new StreamReader(string.Format("Assets/Resources/{0}", resourcesFileName));
+        string resourcesFileName = string.Format("{0}.{1}", Definitions.TRANSLATIONS_FILENAME, currentLang.ToString());
+        TextAsset textAsset = (TextAsset)Resources.Load<TextAsset>(resourcesFileName);
+        string[] lines = textAsset.text.Split('\n');
 
-        while(reader.Peek() >= 0)
-        {
-            string line = reader.ReadLine();
+        foreach(string line in lines)
+        { 
             string[] values = line.Split('=');
             translations[values[0]] = values[1];
         }
-
-        reader.Close();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
