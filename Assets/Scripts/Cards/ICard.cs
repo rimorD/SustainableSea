@@ -8,4 +8,6 @@ public interface ICard
     string CardName();
     bool PlayableInTile(Tile targetTile);
     bool PlayableInPlayer(Player targetPlayer);
+    bool MarkedForSelling();
+    void MarkForSell(bool mark);
 }

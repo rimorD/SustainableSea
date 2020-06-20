@@ -1,7 +1,6 @@
 Voluntariado_Ambiental;2;8
 Area_Marina_Protegida;1;8
 Vedado;1;8
-Estudio_Genetico;2;20
 Vertido_Crudo;-1;8
 Afloramiento_Nutrientes;0;10
 Furtivos;0;8

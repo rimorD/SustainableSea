@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +19,10 @@ public class CardMenu : MonoBehaviour
 
     void Update()
     {
-        // Only update controls if were seeing them
-        if(gameObject.activeSelf)
-        {
-            PlayerMoney.text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.CurrentPlayer().Money);
-            buyButton.interactable = stateManager.CurrentPlayer().Money >= Definitions.PRECIO_COMPRA_CARTAS
-                                        && stateManager.CurrentPlayer().cards.Count < 3;
-            sellButton.interactable = stateManager.CurrentPlayer().cards.Count > 0;
-        }
+        PlayerMoney.text = string.Format(LangManager.GetTranslation("currency_abreviation"), stateManager.CurrentPlayer().Money);
+        buyButton.interactable = stateManager.CurrentPlayer().Money >= Definitions.PRECIO_COMPRA_CARTAS
+                                    && stateManager.CurrentPlayer().cards.Count < 3;
+        sellButton.interactable = stateManager.CurrentPlayer().cards.Count > 0;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -54,6 +51,7 @@ public class CardMenu : MonoBehaviour
         else
         {
             stateManager.CurrentState = CardViewing.GetInstance();
+            stateManager.CurrentPlayer().ConfirmCardSell();
         }
 
     }
@@ -70,11 +68,16 @@ public class CardMenu : MonoBehaviour
 
     public void BuyCard()
     {
-        ICard drawnCard = cardManager.DrawCardFromDeck();
-        stateManager.CurrentPlayer().AddCard(drawnCard);
-        stateManager.CurrentPlayer().Money -= Definitions.PRECIO_COMPRA_CARTAS;
+        string dialogText = string.Format(LangManager.GetTranslation("comprar_carta"), Definitions.PRECIO_COMPRA_CARTAS);
+        Action onConfirm = delegate ()
+        {
+            ICard drawnCard = cardManager.DrawCardFromDeck();
+            stateManager.CurrentPlayer().AddCard(drawnCard);
+            stateManager.CurrentPlayer().Money -= Definitions.PRECIO_COMPRA_CARTAS;
 
-        LoadPlayerCards();
+            LoadPlayerCards();
+        };
+        GameObject.FindObjectOfType<ConfirmDialog>().ShowDialog(dialogText, onConfirm);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -90,7 +93,7 @@ public class CardMenu : MonoBehaviour
             GameObject newCardButton = GameObject.Instantiate(cardButtonPrefab, CardsPanel.transform);
             newCardButton.GetComponent<CardInventoryButton>().RepresentedCard = stateManager.CurrentPlayer().cards[i];
             Sprite cardImage = Resources.Load<Sprite>("Cartas/" + stateManager.CurrentPlayer().cards[i].CardName());
-            newCardButton.GetComponent<Button>().GetComponent<Image>().sprite = cardImage;
+            newCardButton.GetComponentInChildren<Button>().GetComponent<Image>().sprite = cardImage;
         }
     }
 

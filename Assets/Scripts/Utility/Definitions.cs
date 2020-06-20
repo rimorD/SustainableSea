@@ -10,10 +10,17 @@ public static class Definitions
     public const float SMOOTH_HEIGHT = 0.5f;
     public const float MAX_DEGREES_DELTA = 2.5f;
 
-    // Cards
+    //Rules
+    public const int PGS_TO_WIN = 15;
+
+    // Prices
     public const int PRECIO_COMPRA_CARTAS = 3000;
     public const int PRECIO_VENTA_CARTAS = 1500;
     public const int CANTIDAD_A_PERDER_MULTA = 2000;
+    public const int PRECIO_COMPRA_PGS = 10000;
+    public const int PRECIO_COMPRA_ARTESANAL = 6000;
+    public const int PRECIO_COMPRA_ARRASTRE = 12000;
+    public const int CANTIDAD_A_RECIBIR_SALIDA = 2000;
 
     // UI
     public const float NEWTURN_PANEL_BACKGROUND_OPACITY = 0.5f;

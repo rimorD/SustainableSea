@@ -40,12 +40,23 @@ public class WaitingForAnimation : BaseGameState, IGameState
                 {
                     boat.currentMovement = null;
                     boat.isAnimating = false;
-                    stateManager.NewTurn();
+                    WaitingForAnimation.PendingAnimations.Remove(boat.gameObject);
                 }
             }
         }
     }
 
+    //---------------------------------------------------------------------------------------------
+
+    public override void StateUpdate(StateManager stateManager)
+    {
+        if(PendingAnimations.Count <= 0)
+        {
+            stateManager.currentState = WaitingForTurnEndAction.GetInstance();
+        }
+    }
+
     // Data ///////////////////////////////////////////////////////////////////////////////////////
     public static WaitingForAnimation StateInstance;
+    public static List<GameObject> PendingAnimations = new List<GameObject>();
 }

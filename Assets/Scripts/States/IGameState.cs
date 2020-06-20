@@ -13,4 +13,5 @@ public interface IGameState
     void PlayerClick(StateManager stateManager, CardManager cardManager, int playerId);
     void InventoryCardClick(StateManager stateManager, CardManager cardManager, CardInventoryButton inventoryCard);
     void CameraUpdate(CameraManager camera);
+    void StateUpdate(StateManager stateManager);
 }

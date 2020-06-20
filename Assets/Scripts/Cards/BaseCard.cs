@@ -17,6 +17,7 @@ public abstract class BaseCard : ICard
 
     public virtual void PlayCard(Player player, Tile tile) 
     {
+        Debug.Log(string.Format("Playing card {0}", this.cardName));
         player.PGS += this.PGS;
     }
 
@@ -36,6 +37,20 @@ public abstract class BaseCard : ICard
 
     //---------------------------------------------------------------------------------------------
 
+    public bool MarkedForSelling()
+    {
+        return markedForSelling;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void MarkForSell(bool mark)
+    {
+        markedForSelling = mark;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public string CardName()
     {
         return cardName;
@@ -44,4 +59,5 @@ public abstract class BaseCard : ICard
     // Data ///////////////////////////////////////////////////////////////////////////////////////
     public int PGS;
     public string cardName;
+    public bool markedForSelling;
 }

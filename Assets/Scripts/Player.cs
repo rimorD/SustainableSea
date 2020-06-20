@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,17 +35,43 @@ public class Player : MonoBehaviour
 
     //---------------------------------------------------------------------------------------------
 
+    public void ConfirmCardSell()
+    {
+        for(int i=cards.Count - 1; i>=0; i--)
+        {
+            if (cards[i].MarkedForSelling())
+            {
+                GameObject.FindObjectOfType<CardManager>().DiscardPile.Add(cards[i]);
+                cards.RemoveAt(i);
+                Money += Definitions.PRECIO_VENTA_CARTAS;
+            }
+        }
+        stateManager.cardsView.GetComponent<CardMenu>().LoadPlayerCards();
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void RemoveCard(ICard card)
+    {
+        cards.Remove(card);
+        stateManager.cardManager.DiscardPile.Add(card);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public void AddCard(ICard card)
     {
         if (this.cards == null)
             cards = new List<ICard>();
 
         this.cards.Add(card);
+    }
 
-        if(cards.Count > 3)
-        {
-            stateManager.DiscardingCard();
-        }
+    //---------------------------------------------------------------------------------------------
+
+    public override string ToString()
+    {
+        return string.Format("{0}_id{1}", PlayerName, PlayerId);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +79,10 @@ public class Player : MonoBehaviour
     public Color PlayerColor;
     public string PlayerAvatar;
     public int PlayerId;
-    public int Money;
+    public int Money = 0;
     public int PGS;
     public bool LostTurn = false;
+    public bool CrossedInitialTile = false;
     private List<Boat> boats;
     public List<ICard> cards;
 

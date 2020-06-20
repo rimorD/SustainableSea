@@ -28,13 +28,57 @@ public class Boat : MonoBehaviour
 
     //---------------------------------------------------------------------------------------------
 
+    public Vector3 GetPositionForCurrentTile()
+    {
+        return currentTile.GetBoatPosition(this);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void Move(Movement move)
+    {
+        pendingMovements.Enqueue(move);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void LeaveTile()
+    {
+        currentTile.boatsInTile.Remove(this);
+        if(boatType == BoatType.ARTISANAL)
+        {
+            currentTile.artisanalBoatsOnTile--;
+        }
+        else
+        {
+            currentTile.trailBoatsOnTile--;
+        }
+    }
+    
+    //---------------------------------------------------------------------------------------------
+
+    public void ArriveAtTile()
+    {
+        currentTile.boatsInTile.Add(this);
+        if (boatType == BoatType.ARTISANAL)
+        {
+            currentTile.artisanalBoatsOnTile++;
+        }
+        else
+        {
+            currentTile.trailBoatsOnTile++;
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public void CollectResources()
     {
         int resources = currentTile.GetResources();
         if(boatType == BoatType.TRAIL)
         {
-            resources *= 2;
-            currentTile.overexploited = true;
+            resources *= 5;
+            currentTile.MarkAsOverexploited();
         }
         Owner.Money += resources;
     }

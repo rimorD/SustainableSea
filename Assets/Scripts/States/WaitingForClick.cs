@@ -28,32 +28,28 @@ public class WaitingForClick : BaseGameState, IGameState
         // Initialize movement queue
         boat.pendingMovements = new Queue<Movement>();
         // Move out of the tile
-        boat.pendingMovements.Enqueue
+        boat.Move
         (
             new Movement
             (
-                new Vector3
-                (
-                    boat.currentTile.transform.position.x,
-                    boat.currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT,
-                    boat.currentTile.transform.position.z
-                )
+                boat.GetPositionForCurrentTile() + Vector3.up * Definitions.SMOOTH_HEIGHT
             )
         );
+        boat.LeaveTile();
 
         // Move
         int tilesToMove = stateManager.LastRollResult;
         for (int i = 0; i < tilesToMove; i++)
         {
             boat.currentTile = boat.currentTile.nextTile;
-            if (boat.currentTile.isCorner)
+            if (boat.currentTile.isCorner && i + 1 < tilesToMove)
             {
                 // Move to corner
-                boat.pendingMovements.Enqueue
+                boat.Move
                 (
                     new Movement
                     (
-                        new Vector3(boat.currentTile.transform.position.x, boat.currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT, boat.currentTile.transform.position.z),
+                        boat.GetPositionForCurrentTile() + Vector3.up * Definitions.SMOOTH_HEIGHT,
                         Quaternion.Euler(boat.gameObject.transform.eulerAngles.x, boat.gameObject.transform.eulerAngles.y + 90, boat.gameObject.transform.eulerAngles.z)
                     )
                 );
@@ -61,29 +57,32 @@ public class WaitingForClick : BaseGameState, IGameState
 
             if (boat.currentTile.isInitialTile)
             {
-                // Do whatever, get money, etc...
+                stateManager.CurrentPlayer().Money += Definitions.CANTIDAD_A_RECIBIR_SALIDA;
+                stateManager.CurrentPlayer().CrossedInitialTile = true;
             }
         }
 
         // Final destination
-        boat.pendingMovements.Enqueue
+        boat.ArriveAtTile();
+        boat.currentTile.UpdateBoatPositions(boat);
+        Vector3 finalPosition = boat.GetPositionForCurrentTile();
+        boat.Move
         (
             new Movement
             (
-                new Vector3
-                (
-                    boat.currentTile.transform.position.x,
-                    boat.currentTile.transform.position.y + Definitions.SMOOTH_HEIGHT,
-                    boat.currentTile.transform.position.z
-                )
+                finalPosition + Vector3.up * Definitions.SMOOTH_HEIGHT
             )
         );
 
 
         // Move into the tile
-        boat.pendingMovements.Enqueue(new Movement(boat.currentTile.transform.position));
-        stateManager.CurrentState = WaitingForAnimation.GetInstance();
+        boat.Move
+        (
+            new Movement(finalPosition)
+        );
         boat.isAnimating = true;
+        WaitingForAnimation.PendingAnimations.Add(boat.gameObject);
+        stateManager.CurrentState = WaitingForAnimation.GetInstance();
 
         // Get a card if we rolled 6
         if (stateManager.LastRollResult == 6)
@@ -98,6 +97,8 @@ public class WaitingForClick : BaseGameState, IGameState
             {
                 boat.Owner.AddCard(drawnCard);
             }
+
+            stateManager.ShowCardReceived(drawnCard.CardName());
         }
         // Move furtives if we rolled 1
         if (stateManager.LastRollResult == 1)

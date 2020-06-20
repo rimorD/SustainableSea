@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardInventoryButton : MonoBehaviour
 {
@@ -22,12 +23,10 @@ public class CardInventoryButton : MonoBehaviour
         stateManager.CurrentState.InventoryCardClick(stateManager, cardManager, this);
     }
 
-    public void RemoveCard()
+    public void MarkCard() 
     {
-        stateManager.CurrentPlayer().cards.Remove(RepresentedCard);
-        cardManager.DiscardPile.Add(RepresentedCard);
-        Destroy(gameObject);
-        stateManager.cardsView.GetComponent<CardMenu>().LoadPlayerCards();
+        gameObject.GetComponent<Image>().color = (RepresentedCard.MarkedForSelling()) ? Color.white : stateManager.CurrentPlayer().PlayerColor;
+        RepresentedCard.MarkForSell(!RepresentedCard.MarkedForSelling());
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

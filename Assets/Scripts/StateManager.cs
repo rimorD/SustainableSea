@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
@@ -15,7 +17,13 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
+        if(CurrentPlayer().PGS >= Definitions.PGS_TO_WIN)
+        {
+            CurrentState = GameOver.GetInstance();
+            ShowEndScreen();
+        }
 
+        currentState.StateUpdate(this);
     }
 
     //---------------------------------------------------------------------------------------------
@@ -56,6 +64,8 @@ public class StateManager : MonoBehaviour
     public void DonePlayingCard()
     {
         CurrentState = WaitingForAction.GetInstance();
+        Player currentPlayer = CurrentPlayer();
+        currentPlayer.RemoveCard(cardManager.cardPlayed);
         ShowTurnView(true);
         ShowBoardView(false);
     }
@@ -128,6 +138,29 @@ public class StateManager : MonoBehaviour
 
     //---------------------------------------------------------------------------------------------
 
+    public void ShowEndScreen()
+    {
+        endScreen.GetComponent<EndScreen>().ConfigureView(CurrentPlayer().PlayerName, CurrentPlayer().PlayerColor);
+        endScreen.SetActive(true);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void ShowCardReceived(string cardName)
+    {
+        cardReceivedView.GetComponent<ReceivedCardView>().Show(cardName);
+        CurrentState = ReceivingCard.GetInstance();
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public void ShowBoardView(bool show, bool withGoBack = true)
     {
         boardView.SetActive(show);
@@ -138,11 +171,21 @@ public class StateManager : MonoBehaviour
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
-    public IGameState CurrentState = WaitingForAction.GetInstance();
+    public IGameState currentState = WaitingForAction.GetInstance();
+    public IGameState CurrentState
+    {
+        get { return currentState; }
+        set 
+        {
+            Debug.Log(string.Format("state changed from {0} to {1}", currentState, value));
+            currentState = value; 
+        }
+    }
     public int LastRollResult;
 
     public Tile InitialTile;
     public FurtiveBoat Furtives;
+    public CardManager cardManager;
 
     // Player stuff
     public int CurrentPlayerId = 0;
@@ -154,4 +197,7 @@ public class StateManager : MonoBehaviour
     public GameObject turnView;
     public GameObject cardsView;
     public GameObject boardView;
+    public GameObject endScreen;
+    public GameObject boatShop;
+    public GameObject cardReceivedView;
 }

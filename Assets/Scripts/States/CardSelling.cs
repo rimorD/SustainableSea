@@ -22,9 +22,7 @@ public class CardSelling : BaseGameState, IGameState
 
     public override void InventoryCardClick(StateManager stateManager, CardManager cardManager, CardInventoryButton inventoryCard)
     {
-        stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
-
-        inventoryCard.RemoveCard();
+        inventoryCard.MarkCard();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

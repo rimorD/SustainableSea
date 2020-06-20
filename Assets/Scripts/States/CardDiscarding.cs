@@ -22,10 +22,12 @@ public class CardDiscarding : BaseGameState, IGameState
 
     public override void InventoryCardClick(StateManager stateManager, CardManager cardManager, CardInventoryButton inventoryCard)
     {
-        stateManager.CurrentPlayer().Money += Definitions.PRECIO_VENTA_CARTAS;
-        inventoryCard.RemoveCard();
-        if (stateManager.CurrentPlayer().cards.Count <= 3)
+        inventoryCard.MarkCard();
+        if (stateManager.CurrentPlayer().cards.Count - stateManager.CurrentPlayer().cards.Where(card => card.MarkedForSelling()).Count() <= 3)
+        {
+            stateManager.CurrentPlayer().ConfirmCardSell();
             stateManager.DoneDiscardingCard();
+        }
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

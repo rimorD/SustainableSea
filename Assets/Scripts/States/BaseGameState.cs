@@ -23,6 +23,13 @@ public class BaseGameState : IGameState
 
     //---------------------------------------------------------------------------------------------
 
+    public virtual void StateUpdate(StateManager stateManager)
+    {
+        return;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
     public virtual void TileOnClick(StateManager stateManager, CardManager cardManager, Tile targetTile)
     {
         return;

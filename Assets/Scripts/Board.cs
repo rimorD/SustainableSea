@@ -251,7 +251,7 @@ public class Board : MonoBehaviour
         GameObject PlayerPrefab = Resources.Load<GameObject>("Prefabs/Player");
         GameObject PlayerContainer = GameObject.Find("Players");
 
-        GameObject BoatPrefab = Resources.Load<GameObject>("Prefabs/Barco");
+        GameObject ArtisanalBoatPrefab = Resources.Load<GameObject>("Prefabs/BarcoArtesanal");
         GameObject BoatContainer = GameObject.Find("Barcos-Jugador");
 
         for(int i = 0; i < StateManager.NumberOfPlayers; i++)
@@ -263,10 +263,12 @@ public class Board : MonoBehaviour
             newPlayer.PlayerColor = StateManager.PlayerColors[i];
 
             // Crear un barco para el jugador
-            GameObject boatGameObject = GameObject.Instantiate(BoatPrefab, initialTile.transform.position, Quaternion.identity, BoatContainer.transform);
+            GameObject boatGameObject = GameObject.Instantiate(ArtisanalBoatPrefab, initialTile.transform.position, Quaternion.identity, BoatContainer.transform);
             Boat newBoat = boatGameObject.GetComponent<Boat>();
             newBoat.SetCurrentTile(initialTile.GetComponent<Tile>());
             newPlayer.AddBoat(newBoat);
+            newBoat.ArriveAtTile();
+            boatGameObject.transform.position = newBoat.GetPositionForCurrentTile();
 
             stateManager.Players.Add(newPlayer);
         }

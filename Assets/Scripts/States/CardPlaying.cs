@@ -27,8 +27,8 @@ public class CardPlaying : BaseGameState, IGameState
             return;
 
         cardManager.cardPlayed.PlayCard(stateManager.CurrentPlayer(), targetTile);
-        cardManager.cardPlayed = null;
         stateManager.DonePlayingCard();
+        cardManager.cardPlayed = null;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -40,8 +40,8 @@ public class CardPlaying : BaseGameState, IGameState
             return;
 
         cardManager.cardPlayed.PlayCard(stateManager.Players[playerId], null);
-        cardManager.cardPlayed = null;
         stateManager.DonePlayingCard();
+        cardManager.cardPlayed = null;
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

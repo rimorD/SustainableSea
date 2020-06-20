@@ -29,6 +29,7 @@ public class FurtiveBoat : MonoBehaviour
             {
                 currentMovement = null;
                 isAnimating = false;
+                WaitingForAnimation.PendingAnimations.Remove(gameObject);
             }
         }
     }
@@ -44,6 +45,8 @@ public class FurtiveBoat : MonoBehaviour
         CurrentTile = targetTile;
         CurrentTile.furtives = true;
 
+        Debug.Log("Moving furtives to tile " + targetTile);
+
         currentMovement = 
             new Movement
             (
@@ -54,6 +57,7 @@ public class FurtiveBoat : MonoBehaviour
                 )
             );
         isAnimating = true;
+        WaitingForAnimation.PendingAnimations.Add(gameObject);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////

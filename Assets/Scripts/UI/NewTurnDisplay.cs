@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,21 @@ public class NewTurnDisplay : MonoBehaviour
             stateManager.CurrentPlayer().PlayerColor.b,
             Definitions.NEWTURN_PANEL_BACKGROUND_OPACITY
         );
+        buySMPButton.interactable = stateManager.CurrentPlayer().Money >= Definitions.PRECIO_COMPRA_PGS;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void BuySMP()
+    {
+        string dialogText = string.Format(LangManager.GetTranslation("comprar_pgs"), Definitions.PRECIO_COMPRA_PGS);
+        buySMPButton.interactable = false;
+        Action onConfirm = delegate ()
+        {
+            stateManager.CurrentPlayer().PGS++;
+            stateManager.CurrentPlayer().Money -= Definitions.PRECIO_COMPRA_PGS;
+        };
+        GameObject.FindObjectOfType<ConfirmDialog>().ShowDialog(dialogText, onConfirm);
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
@@ -39,4 +55,6 @@ public class NewTurnDisplay : MonoBehaviour
     public Image playerAvatar;
 
     Image panelBackground;
+
+    public Button buySMPButton;
 }

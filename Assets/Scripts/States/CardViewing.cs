@@ -25,8 +25,6 @@ public class CardViewing : BaseGameState, IGameState
         cardManager.cardPlayed = inventoryCard.RepresentedCard;
 
         stateManager.PlayingCard();
-
-        inventoryCard.RemoveCard();
     }
 
     // Data ///////////////////////////////////////////////////////////////////////////////////////
