@@ -42,7 +42,7 @@ public class WaitingForClick : BaseGameState, IGameState
         for (int i = 0; i < tilesToMove; i++)
         {
             boat.currentTile = boat.currentTile.nextTile;
-            if (boat.currentTile.isCorner && i + 1 < tilesToMove)
+            if (boat.currentTile.isCorner)
             {
                 // Move to corner
                 boat.Move
