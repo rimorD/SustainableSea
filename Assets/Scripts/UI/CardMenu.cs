@@ -71,6 +71,10 @@ public class CardMenu : MonoBehaviour
         string dialogText = string.Format(LangManager.GetTranslation("comprar_carta"), Definitions.PRECIO_COMPRA_CARTAS);
         Action onConfirm = delegate ()
         {
+            if(cardManager == null)
+            {
+                cardManager = GameObject.FindObjectOfType<CardManager>();
+            }
             ICard drawnCard = cardManager.DrawCardFromDeck();
             stateManager.CurrentPlayer().AddCard(drawnCard);
             stateManager.CurrentPlayer().Money -= Definitions.PRECIO_COMPRA_CARTAS;

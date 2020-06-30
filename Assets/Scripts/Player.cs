@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
     public int PGS;
     public bool LostTurn = false;
     public bool CrossedInitialTile = false;
-    private List<Boat> boats;
+    public List<Boat> boats;
     public List<ICard> cards;
 
     private StateManager stateManager;
