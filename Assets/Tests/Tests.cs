@@ -304,16 +304,17 @@ namespace Tests
             yield return null;
 
             StateManager stateManager = GameObject.FindObjectOfType<StateManager>();
+            CardManager cardManager = GameObject.FindObjectOfType<CardManager>();
             // Get current player boat
             Boat currentBoat = GameObject.FindObjectsOfType<Boat>().First(boat => boat.Owner == stateManager.CurrentPlayer());
             // Fake roll
             stateManager.LastRollResult = 6;
             stateManager.currentState = WaitingForClick.GetInstance();
 
-            // Check we receive a card, whatever card
+            // Check we receive a card or a card has been played on our boats current tile
             Assert.IsTrue(stateManager.CurrentPlayer().cards.Count == 0);
-            stateManager.currentState.BoatOnClick(stateManager, null, currentBoat);
-            Assert.IsTrue(stateManager.CurrentPlayer().cards.Count == 1);
+            stateManager.currentState.BoatOnClick(stateManager, cardManager, currentBoat);
+            Assert.IsTrue(stateManager.CurrentPlayer().cards.Count == 1 || stateManager.CurrentPlayer().boats[0].currentTile.passiveCard != null);
         }
 
         // Check you can buy cards
